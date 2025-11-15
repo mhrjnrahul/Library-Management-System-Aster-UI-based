@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add New Book</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+
+<body class="bg-light">
+
+    <!-- Navbar -->
+    <nav class="navbar navbar-dark bg-primary">
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="#">Library System</a>
+
+            <a href="librarian_dashboard.html" class="navbar-brand fw-light fs-6">Back</a>
+        </div>
+    </nav>
+
+    <!-- Add Book Card -->
+    <div class="container my-4">
+        <div class="card shadow-sm border-0">
+            <div class="card-header bg-primary text-white py-3">
+                <h4 class="mb-0">Add New Book</h4>
+            </div>
+
+            <div class="card-body">
+
+                <form class="row g-4">
+
+                    <!-- Book Title -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Book Title</label>
+                        <input type="text" class="form-control form-control" placeholder="Enter book title" required>
+                    </div>
+
+                    <!-- Author + ISBN -->
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">Author</label>
+                        <input type="text" class="form-control" placeholder="Author name">
+                    </div>
+
+                    <div class="col-md-6">
+                        <label class="form-label fw-semibold">ISBN</label>
+                        <input type="text" class="form-control" placeholder="ISBN number">
+                    </div>
+
+                    <!-- Category -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Category</label>
+                        <input type="text" class="form-control" placeholder="Novel, Science, Fiction, etc.">
+                    </div>
+
+                    <!-- Publisher + Year + Quantity -->
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Publisher</label>
+                        <input type="text" class="form-control" placeholder="Publisher name">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Publish Year</label>
+                        <input type="number" class="form-control" placeholder="2015">
+                    </div>
+
+                    <div class="col-md-4">
+                        <label class="form-label fw-semibold">Quantity</label>
+                        <input type="number" class="form-control" placeholder="Copies available">
+                    </div>
+
+                    <!-- Description -->
+                    <div class="col-12">
+                        <label class="form-label fw-semibold">Description</label>
+                        <textarea class="form-control" rows="3" placeholder="Short description"></textarea>
+                    </div>
+
+                    <!-- Submit Button -->
+                    <div class="col-12 text-end">
+                        <button class="btn btn-success px-4 py-2">Add Book</button>
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+</html>
