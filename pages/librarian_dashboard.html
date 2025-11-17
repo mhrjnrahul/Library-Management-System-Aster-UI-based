@@ -57,6 +57,44 @@
     .card-custom {
       border-radius: 12px;
     }
+
+    .activity-timeline {
+      border-left: 2px solid #dee2e6;
+      padding-left: 20px;
+    }
+
+    .activity-item {
+      display: flex;
+      align-items: flex-start;
+      gap: 15px;
+      margin-bottom: 20px;
+      position: relative;
+    }
+
+    .activity-item:last-child {
+      margin-bottom: 0;
+    }
+
+    .activity-icon {
+      width: 35px;
+      height: 35px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-left: -38px;
+      /* Pull icon into the left border */
+    }
+
+    .activity-item p {
+      margin: 0;
+      font-size: 0.95rem;
+    }
+
+    .activity-item small {
+      font-size: 0.75rem;
+    }
   </style>
 
 </head>
@@ -132,36 +170,115 @@
 
     <div class="row g-3 mb-4">
       <div class="col-md-3">
-        <a href="issue_book.html"><button class="btn btn-primary w-100 py-3"><i class="bi bi-book-half me-2"></i> Issue Book</button></a>
+        <a href="issue_book.html"><button class="btn btn-primary w-100 py-3"><i class="bi bi-book-half me-2"></i> Issue
+            Book</button></a>
       </div>
       <div class="col-md-3">
-       <a href="return_book.html"> <button class="btn btn-warning w-100 py-3"><i class="bi bi-arrow-counterclockwise me-2"></i> Return
-          Book</button></a>
+        <a href="return_book.html"> <button class="btn btn-warning w-100 py-3"><i
+              class="bi bi-arrow-counterclockwise me-2"></i> Return
+            Book</button></a>
       </div>
       <div class="col-md-3">
         <a href="addBook.html"><button class="btn btn-success w-100 py-3"><i class="bi bi-plus-circle me-2"></i> Add New
             Book</button></a>
       </div>
       <div class="col-md-3">
-        <a href="delete_book.html"><button class="btn btn-danger w-100 py-3"><i class="bi bi-trash me-2"></i> Delete Book</button></a>
+        <a href="delete_book.html"><button class="btn btn-danger w-100 py-3"><i class="bi bi-trash me-2"></i> Delete
+            Book</button></a>
       </div>
     </div>
 
     <!-- Bottom Sections -->
     <div class="row g-3">
       <div class="col-md-6">
-        <div class="card card-custom shadow-sm p-4">
+        <div class="card shadow-sm p-4">
           <h6 class="fw-bold mb-3">Recent Activity</h6>
-          <p class="text-muted">Activity logs go here...</p>
+
+          <div class="activity-timeline">
+
+            <div class="activity-item">
+              <div class="activity-icon bg-success">
+                <i class="bi bi-check-circle-fill text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1"><strong>John Doe</strong> returned <em>“Atomic Habits”</em></p>
+                <small class="text-muted">10 mins ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon bg-warning">
+                <i class="bi bi-arrow-right-circle-fill text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1"><strong>Sarah</strong> issued <em>“The Alchemist”</em></p>
+                <small class="text-muted">35 mins ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon bg-primary">
+                <i class="bi bi-plus-circle-fill text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1">Added new book <em>“Clean Code”</em></p>
+                <small class="text-muted">1 hour ago</small>
+              </div>
+            </div>
+
+            <div class="activity-item">
+              <div class="activity-icon bg-danger">
+                <i class="bi bi-exclamation-triangle-fill text-white"></i>
+              </div>
+              <div>
+                <p class="mb-1"><strong>David</strong> has overdue book <em>“1984”</em></p>
+                <small class="text-muted">3 hours ago</small>
+              </div>
+            </div>
+
+          </div>
         </div>
       </div>
 
+
       <div class="col-md-6">
-        <div class="card card-custom shadow-sm p-4">
+        <div class="card h-100 shadow-sm p-4">
           <h6 class="fw-bold mb-3">Overdue Books</h6>
-          <p class="text-muted">List of overdue books...</p>
+
+          <div class="list-group">
+
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <strong>1984</strong>
+                <div class="small text-muted">Borrower: John Doe</div>
+                <div class="small">Due: Jan 10, 2025</div>
+              </div>
+              <span class="badge bg-danger rounded-pill">5 days</span>
+            </div>
+
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <strong>The Alchemist</strong>
+                <div class="small text-muted">Borrower: Sarah K.</div>
+                <div class="small">Due: Jan 8, 2025</div>
+              </div>
+              <span class="badge bg-danger rounded-pill">7 days</span>
+            </div>
+
+            <div class="list-group-item d-flex justify-content-between align-items-start">
+              <div>
+                <strong>Atomic Habits</strong>
+                <div class="small text-muted">Borrower: Dev P.</div>
+                <div class="small">Due: Jan 12, 2025</div>
+              </div>
+              <span class="badge bg-danger rounded-pill">3 days</span>
+            </div>
+
+          </div>
+
         </div>
       </div>
+
     </div>
   </div>
 
