@@ -7,20 +7,29 @@
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
-<link rel="stylesheet" href="./assets/style.css">
     <title>LibraryMS – Home</title>
 
     <style>
         /* ===========================
            GLOBAL STYLE IMPROVEMENTS
         ============================ */
-        /* body {
-            background-color: #f5f7fa !important;
-        } */
+        :root {
+            --primary-color: #2c5aa0;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+        }
+
+        body {
+            background-color: #f8fafc !important;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+        }
 
         .btn {
             border-radius: 50px;
             transition: 0.25s ease;
+            font-weight: 600;
         }
 
         .btn:hover {
@@ -29,109 +38,285 @@
         }
 
         /* ===========================
+           NAVBAR
+        ============================ */
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #1e40af) !important;
+            padding: 1rem 0;
+        }
+
+        .navbar-brand {
+            font-size: 1.8rem;
+            font-weight: 700;
+        }
+
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
+        }
+
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        /* ===========================
            HERO SECTION
         ============================ */
         .hero {
-            background: linear-gradient(rgba(0, 0, 0, .45), rgba(0, 0, 0, .45)),
+            background: linear-gradient(rgba(44, 90, 160, 0.85), rgba(30, 64, 175, 0.85)),
                 url("https://images.unsplash.com/photo-1524995997946-a1c2e315a42f") center/cover no-repeat;
-            padding: 130px 0;
+            padding: 140px 0;
             color: #fff;
             text-align: center;
         }
 
-        .hero .input-group input {
-            border-radius: 0 30px 30px 0;
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            margin-bottom: 1.5rem;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .hero .lead {
+            font-size: 1.4rem;
+            margin-bottom: 2.5rem;
+            opacity: 0.95;
+        }
+
+        .hero .input-group {
+            max-width: 600px;
+            margin: 0 auto;
+            box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+            border-radius: 50px;
+            overflow: hidden;
         }
 
         .hero .input-group-text {
-            border-radius: 30px 0 0 30px;
+            background: white;
+            border: none;
+            padding: 0.75rem 1.5rem;
+        }
+
+        .hero .form-control {
+            border: none;
+            padding: 0.75rem 1rem;
+            font-size: 1.1rem;
+        }
+
+        .hero .form-control:focus {
+            box-shadow: none;
         }
 
         /* ===========================
            CATEGORY BOXES
         ============================ */
         .category-box {
-            padding: 28px 15px;
-            border-radius: 15px;
+            padding: 2.5rem 1rem;
+            border-radius: 20px;
             background: #ffffff;
-            transition: 0.25s ease-in-out;
-            border: 1px solid #eef2f7;
+            transition: 0.3s ease-in-out;
+            border: 1px solid #e2e8f0;
+            text-align: center;
+            cursor: pointer;
         }
 
         .category-box:hover {
-            background: #e9f2ff;
-            transform: translateY(-6px);
-            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.07);
+            background: linear-gradient(135deg, var(--primary-color), #1e40af);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(44, 90, 160, 0.2);
+            color: white;
+        }
+
+        .category-box:hover i {
+            color: white !important;
+            transform: scale(1.1);
+        }
+
+        .category-box i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1rem;
+            transition: 0.3s ease;
+        }
+
+        .category-box h6 {
+            font-weight: 700;
+            font-size: 1.1rem;
         }
 
         /* ===========================
            BOOK CARDS
         ============================ */
         .book-card {
-            border-radius: 12px;
-            transition: 0.25s ease;
+            border-radius: 16px;
+            transition: 0.3s ease;
             overflow: hidden;
+            border: none;
+            background: white;
         }
 
         .book-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
-            background: linear-gradient(135deg, #ffffff 0%, #f8fbff 100%);
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
         }
 
         .book-cover {
-            height: 170px;
-            width: 125px;
-            border-radius: 8px;
+            height: 200px;
+            width: 140px;
+            border-radius: 12px;
             object-fit: cover;
+            margin: 0 auto;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        .book-card h6 {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-top: 1rem;
+        }
+
+        .book-card .text-secondary {
+            color: #64748b !important;
+            font-size: 0.9rem;
+        }
+
+        .btn-borrow {
+            background: linear-gradient(135deg, var(--secondary-color), #059669);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-borrow:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            color: white;
         }
 
         /* ===========================
            ABOUT SECTION
         ============================ */
+        .about-section {
+            background: linear-gradient(135deg, #f8fafc 0%, #e2e8f0 100%);
+            border-radius: 20px;
+            padding: 4rem 2rem;
+        }
+
         .about-box {
-            background: #f8f9fb;
-            border: 1px solid #e1e6ef;
-            border-radius: 15px;
-            transition: 0.25s ease;
+            background: white;
+            border: 1px solid #e2e8f0;
+            border-radius: 16px;
+            transition: 0.3s ease;
+            padding: 2.5rem 1.5rem;
+            text-align: center;
+            height: 100%;
         }
 
         .about-box:hover {
-            background: #eef4ff;
-            transform: translateY(-5px);
-            box-shadow: 0 5px 18px rgba(0, 0, 0, 0.08);
+            background: linear-gradient(135deg, var(--primary-color), #1e40af);
+            transform: translateY(-8px);
+            box-shadow: 0 15px 30px rgba(44, 90, 160, 0.2);
+            color: white;
+        }
+
+        .about-box:hover i,
+        .about-box:hover h6,
+        .about-box:hover .text-muted {
+            color: white !important;
+        }
+
+        .about-box i {
+            font-size: 3rem;
+            color: var(--primary-color);
+            margin-bottom: 1.5rem;
+        }
+
+        .about-box h6 {
+            font-weight: 700;
+            font-size: 1.2rem;
+            margin-bottom: 1rem;
         }
 
         /* ===========================
            FOOTER
         ============================ */
-        footer i {
-            cursor: pointer;
-            transition: 0.25s;
+        footer {
+            background: linear-gradient(135deg, var(--dark-color), #0f172a);
+            padding-top: 4rem !important;
         }
 
-        footer i:hover {
-            color: #0d6efd;
-            transform: translateY(-3px);
+        footer h5, footer h6 {
+            font-weight: 700;
         }
 
-        .btn-borrow {
-           
-            /* Emerald green */
-            color: white;
-            padding: 10px 20px;
-            border-radius: 8px;
-            font-weight: 600;
-            border: none;
+        footer a {
             transition: 0.3s ease;
         }
 
-        .btn-borrow:hover {
-            background: rgb(113, 166, 201);
-            /* Darker emerald */
-            transform: translateY(-2px);
-            box-shadow: 0 4px 8px rgba(16, 185, 129, 0.3);
-            color: white;
+        footer a:hover {
+            color: var(--secondary-color) !important;
+            transform: translateX(5px);
+        }
+
+        footer i {
+            cursor: pointer;
+            transition: 0.3s;
+            font-size: 1.2rem;
+        }
+
+        footer i:hover {
+            color: var(--secondary-color) !important;
+            transform: translateY(-3px);
+        }
+
+        /* ===========================
+           RESPONSIVE DESIGN
+        ============================ */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .hero .lead {
+                font-size: 1.1rem;
+            }
+            
+            .category-box, .about-box {
+                padding: 1.5rem 1rem;
+            }
+            
+            .book-cover {
+                height: 160px;
+                width: 110px;
+            }
+        }
+
+        /* Section Headers */
+        .section-header {
+            font-weight: 800;
+            color: var(--dark-color);
+            margin-bottom: 3rem;
+            position: relative;
+        }
+
+        .section-header:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
         }
     </style>
 </head>
@@ -141,31 +326,35 @@
     <!-- ===========================
          NAVBAR
     ============================ -->
-    <nav class="navbar navbar-expand-lg navbar-dark shadow-sm bg-color" >
+    <nav class="navbar navbar-expand-lg navbar-dark shadow">
         <div class="container">
-
-            <a class="navbar-brand fw-bold" href="index.html">LibraryMS</a>
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-book-half me-2"></i>LibraryMS
+            </a>
 
             <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
                 <span class="navbar-toggler-icon"></span>
             </button>
 
             <div class="collapse navbar-collapse" id="navbarNavDropdown">
-
                 <ul class="navbar-nav me-auto gap-1">
                     <li class="nav-item"><a class="nav-link active" href="#">Home</a></li>
                     <li class="nav-item"><a class="nav-link" href="/Library/pages/homepage/books.html">Books</a></li>
-                    <li class="nav-item"><a class="nav-link" href="/Library/pages/homepage/contact.html">Contact</a>
-                    </li>
+                    <li class="nav-item"><a class="nav-link" href="/Library/pages/homepage/contact.html">Contact</a></li>
                 </ul>
 
                 <form class="d-none d-md-flex me-3">
-                    <input class="form-control rounded-pill" type="search" placeholder="Search books...">
+                    <div class="input-group">
+                        <input class="form-control rounded-pill" type="search" placeholder="Search books...">
+                        <button class="btn btn-light rounded-pill ms-2" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
                 </form>
 
                 <div class="d-flex gap-2 mt-2 mt-md-0">
-                    <a href="./pages/homepage/register.html"
-                        class="btn btn-warning text-dark fw-semibold px-3">Sign Up</a>
+                    <a href="./pages/homepage/login.html" class="btn btn-outline-light px-4">Login</a>
+                    <a href="./pages/homepage/register.html" class="btn btn-warning text-dark fw-semibold px-4">Sign Up</a>
                 </div>
             </div>
         </div>
@@ -176,14 +365,19 @@
     ============================ -->
     <section class="hero mb-5">
         <div class="container">
-            <h1 class="fw-bold display-5 mb-3">Welcome to LibraryMS</h1>
-            <p class="lead mb-4">Your digital gateway to books, knowledge and learning.</p>
+            <h1 class="fw-bold display-4 mb-4">Discover Your Next Favorite Book</h1>
+            <p class="lead mb-5">Access thousands of books, manage your reading journey, and connect with knowledge like never before.</p>
 
             <div class="d-flex justify-content-center">
-                <div class="input-group w-75 w-md-50">
+                <div class="input-group">
                     <span class="input-group-text bg-white"><i class="bi bi-search"></i></span>
-                    <input type="text" placeholder="Search books, authors, ISBN..." class="form-control">
+                    <input type="text" placeholder="Search books, authors, categories..." class="form-control">
+                    <button class="btn btn-warning px-4">Search</button>
                 </div>
+            </div>
+            
+            <div class="mt-4">
+                <small class="text-light opacity-75">Popular searches: Fiction, Science, Technology, History</small>
             </div>
         </div>
     </section>
@@ -192,97 +386,101 @@
          POPULAR CATEGORIES
     ============================ -->
     <section class="container mb-5">
-        <h3 class="fw-semibold mb-4 text-center">Popular Categories</h3>
+        <h3 class="section-header text-center">Explore Categories</h3>
 
         <div class="row g-4 text-center">
             <div class="col-6 col-md-3">
                 <div class="category-box shadow-sm">
-                    <i class="bi bi-book fs-1 text-color"></i>
-                    <h6 class="mt-2 fw-semibold">Novels</h6>
+                    <i class="bi bi-book"></i>
+                    <h6>Fiction & Novels</h6>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="category-box shadow-sm">
-                    <i class="bi bi-journal-text fs-1 text-color"></i>
-                    <h6 class="mt-2 fw-semibold">Academics</h6>
+                    <i class="bi bi-journal-text"></i>
+                    <h6>Academic</h6>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="category-box shadow-sm">
-                    <i class="bi bi-lightbulb fs-1 text-color"></i>
-                    <h6 class="mt-2 fw-semibold">Self Help</h6>
+                    <i class="bi bi-lightbulb"></i>
+                    <h6>Self Help</h6>
                 </div>
             </div>
 
             <div class="col-6 col-md-3">
                 <div class="category-box shadow-sm">
-                    <i class="bi bi-globe fs-1 text-color"></i>
-                    <h6 class="mt-2 fw-semibold">Science</h6>
+                    <i class="bi bi-globe"></i>
+                    <h6>Science & Tech</h6>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- ===========================
-         YOU MAY LIKE
+         FEATURED BOOKS
     ============================ -->
     <section class="container mb-5">
-        <h3 class="fw-semibold mb-3 text-center">You may like</h3>
+        <h3 class="section-header text-center">Featured Books</h3>
 
         <div class="row g-4">
-
-            <!-- CARD TEMPLATE (REPEATED) -->
+            <!-- Book 1 -->
             <div class="col-6 col-md-3">
                 <div class="card p-3 book-card shadow-sm">
                     <div class="text-center">
-                        <img src="./img/logo.png" class="book-cover mb-2" alt="Book">
+                        <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" class="book-cover mb-3" alt="Book Cover">
                     </div>
-                    <h6 class="mb-0 fw-semibold">Book Title</h6>
-                    <small class="text-secondary">Author</small>
-                    <a href="./pages/homepage/login.html"><button
-                            class="btn btn-borrow btn-sm mt-3 w-100 btn-color">Borrow</button></a>
+                    <h6 class="mb-1">The Great Gatsby</h6>
+                    <small class="text-secondary">F. Scott Fitzgerald</small>
+                    <a href="./pages/homepage/login.html">
+                        <button class="btn btn-borrow btn-sm mt-3">Borrow Now</button>
+                    </a>
                 </div>
             </div>
 
-            <!-- DUPLICATE 3 TIMES -->
+            <!-- Book 2 -->
             <div class="col-6 col-md-3">
                 <div class="card p-3 book-card shadow-sm">
                     <div class="text-center">
-                        <img src="./img/logo.png" class="book-cover mb-2">
+                        <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400" class="book-cover mb-3" alt="Book Cover">
                     </div>
-                    <h6 class="mb-0 fw-semibold">Book Title</h6>
-                    <small class="text-secondary">Author</small>
-                    <a href="./pages/homepage/register.html"><button
-                            class="btn btn-borrow btn-sm mt-3 w-100 btn-color">Borrow</button></a>
+                    <h6 class="mb-1">To Kill a Mockingbird</h6>
+                    <small class="text-secondary">Harper Lee</small>
+                    <a href="./pages/homepage/login.html">
+                        <button class="btn btn-borrow btn-sm mt-3">Borrow Now</button>
+                    </a>
                 </div>
             </div>
 
+            <!-- Book 3 -->
             <div class="col-6 col-md-3">
                 <div class="card p-3 book-card shadow-sm">
                     <div class="text-center">
-                        <img src="./img/logo.png" class="book-cover mb-2">
+                        <img src="https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=400" class="book-cover mb-3" alt="Book Cover">
                     </div>
-                    <h6 class="mb-0 fw-semibold">Book Title</h6>
-                    <small class="text-secondary">Author</small>
-                    <a href="./pages/homepage/login.html"><button
-                            class="btn btn-borrow btn-sm mt-3 w-100 btn-color">Borrow</button></a>
+                    <h6 class="mb-1">Clean Code</h6>
+                    <small class="text-secondary">Robert C. Martin</small>
+                    <a href="./pages/homepage/login.html">
+                        <button class="btn btn-borrow btn-sm mt-3">Borrow Now</button>
+                    </a>
                 </div>
             </div>
 
+            <!-- Book 4 -->
             <div class="col-6 col-md-3">
                 <div class="card p-3 book-card shadow-sm">
                     <div class="text-center">
-                        <img src="./img/logo.png" class="book-cover mb-2">
+                        <img src="../Library/img/books/seto dharti.png" class="book-cover mb-3" alt="Book Cover">
                     </div>
-                    <h6 class="mb-0 fw-semibold">Book Title</h6>
-                    <small class="text-secondary">Author</small>
-                    <a href="./pages/homepage/login.html"><button
-                            class="btn btn-borrow btn-sm mt-3 w-100 btn-color">Borrow</button></a>
+                    <h6 class="mb-1">Deep Learning</h6>
+                    <small class="text-secondary">Ian Goodfellow</small>
+                    <a href="./pages/homepage/login.html">
+                        <button class="btn btn-borrow btn-sm mt-3">Borrow Now</button>
+                    </a>
                 </div>
             </div>
-
         </div>
     </section>
 
@@ -290,97 +488,100 @@
          ABOUT SECTION
     ============================ -->
     <section class="container my-5">
-        <div class="p-4 p-md-5 shadow-sm rounded-4 bg-white">
-
-            <h3 class="fw-bold text-center mb-3">
-                <i class="bi bi-book-half me-2 text-color "></i> Why LibraryMS?
+        <div class="about-section shadow-sm">
+            <h3 class="section-header text-center mb-5">
+                Why Choose LibraryMS?
             </h3>
 
-            <p class="text-secondary text-center mx-auto" style="max-width: 900px;">
-                LibraryMS is a modern, user-friendly system designed to help
-                <span class="fw-semibold text-dark">students, teachers, and librarians</span>
-                manage books, members, and borrowing activities with ease.
+            <p class="text-center mx-auto mb-5" style="max-width: 800px; font-size: 1.1rem; color: #475569;">
+                LibraryMS revolutionizes how you interact with books. Our modern platform brings together students, teachers, and librarians in a seamless digital ecosystem designed for the future of education.
             </p>
 
-            <div class="row mt-5 gy-4 justify-content-center">
-
+            <div class="row gy-4 justify-content-center">
                 <div class="col-12 col-md-4">
-                    <div class="p-4 about-box text-center h-100">
-                        <i class="bi bi-layers-fill fs-1 text-color"></i>
-                        <h6 class="fw-semibold mt-3">Organized System</h6>
-                        <p class="small text-muted">Easily track books, members, and records.</p>
+                    <div class="about-box">
+                        <i class="bi bi-layers-fill"></i>
+                        <h6>Organized System</h6>
+                        <p class="small text-muted">Effortlessly track books, members, and borrowing records with our intuitive dashboard.</p>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-4">
-                    <div class="p-4 about-box text-center h-100">
-                        <i class="bi bi-speedometer2 fs-1 text-color"></i>
-                        <h6 class="fw-semibold mt-3">Fast & Reliable</h6>
-                        <p class="small text-muted">Access information quickly and smoothly.</p>
+                    <div class="about-box">
+                        <i class="bi bi-speedometer2"></i>
+                        <h6>Fast & Reliable</h6>
+                        <p class="small text-muted">Lightning-fast search and seamless navigation ensure you find what you need instantly.</p>
                     </div>
                 </div>
 
                 <div class="col-12 col-md-4">
-                    <div class="p-4 about-box text-center h-100">
-                        <i class="bi bi-people-fill fs-1 text-color"></i>
-                        <h6 class="fw-semibold mt-3">For Everyone</h6>
-                        <p class="small text-muted">Designed for students, teachers & librarians.</p>
+                    <div class="about-box">
+                        <i class="bi bi-people-fill"></i>
+                        <h6>For Everyone</h6>
+                        <p class="small text-muted">Designed with students, teachers, and librarians in mind - accessible to all.</p>
                     </div>
                 </div>
-
             </div>
-
         </div>
     </section>
 
     <!-- ===========================
          FOOTER
     ============================ -->
-    <footer class="bg-black text-white pt-5 pb-3 mt-5">
+    <footer class="bg-black text-white pt-5 pb-4 mt-5">
         <div class="container">
-
             <div class="row">
                 <div class="col-md-4 mb-4">
-                    <h5 class="fw-bold">LibraryMS</h5>
-                    <p class="small">A modern platform to manage books, members and borrowing activities easily.</p>
+                    <h5 class="fw-bold mb-3">
+                        <i class="bi bi-book-half me-2"></i>LibraryMS
+                    </h5>
+                    <p class="small" style="color: #cbd5e1;">A modern digital platform transforming how libraries manage collections and serve their communities in the 21st century.</p>
                 </div>
 
                 <div class="col-6 col-md-2 mb-4">
-                    <h6 class="fw-semibold">Quick Links</h6>
+                    <h6 class="fw-semibold mb-3">Quick Links</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="#" class="text-white text-decoration-none">Home</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Books</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Contact</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Home</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Books</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Contact</a></li>
                     </ul>
                 </div>
 
                 <div class="col-6 col-md-2 mb-4">
-                    <h6 class="fw-semibold">More</h6>
+                    <h6 class="fw-semibold mb-3">Support</h6>
                     <ul class="list-unstyled small">
-                        <li><a href="#" class="text-white text-decoration-none">FAQ</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Support</a></li>
-                        <li><a href="#" class="text-white text-decoration-none">Policy</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">FAQ</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Help Center</a></li>
+                        <li class="mb-2"><a href="#" class="text-white text-decoration-none">Privacy Policy</a></li>
                     </ul>
                 </div>
 
                 <div class="col-md-4 mb-4">
-                    <h6 class="fw-semibold">Contact</h6>
-                    <p class="small mb-1"><i class="bi bi-geo-alt"></i> Lalitpur, Nepal</p>
-                    <p class="small mb-1"><i class="bi bi-envelope"></i> libraryms@example.com</p>
-                    <p class="small mb-2"><i class="bi bi-telephone"></i> +977 9761697930</p>
+                    <h6 class="fw-semibold mb-3">Contact Info</h6>
+                    <p class="small mb-2" style="color: #cbd5e1;">
+                        <i class="bi bi-geo-alt me-2"></i> Lalitpur, Nepal
+                    </p>
+                    <p class="small mb-2" style="color: #cbd5e1;">
+                        <i class="bi bi-envelope me-2"></i> libraryms@example.com
+                    </p>
+                    <p class="small mb-3" style="color: #cbd5e1;">
+                        <i class="bi bi-telephone me-2"></i> +977 9761697930
+                    </p>
 
                     <div class="d-flex gap-3 fs-5">
-                        <i class="bi bi-facebook"></i>
-                        <i class="bi bi-instagram"></i>
-                        <i class="bi bi-twitter"></i>
-                        <i class="bi bi-github"></i>
+                        <i class="bi bi-facebook text-white"></i>
+                        <i class="bi bi-instagram text-white"></i>
+                        <i class="bi bi-twitter text-white"></i>
+                        <i class="bi bi-github text-white"></i>
                     </div>
                 </div>
             </div>
 
-            <hr class="border-secondary">
+            <hr class="border-secondary my-4">
 
-            <p class="text-center small mb-0">© 2025 LibraryMS — All Rights Reserved</p>
+            <p class="text-center small mb-0" style="color: #94a3b8;">
+                © 2025 LibraryMS — All Rights Reserved | Designed with ❤️ for book lovers
+            </p>
         </div>
     </footer>
 
