@@ -1,0 +1,255 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Multi-Role Login System</title>
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+        }
+        .login-container {
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            overflow: hidden;
+        }
+        .login-header {
+            background: linear-gradient(to right, #4a6ee0, #6a11cb);
+            color: white;
+            padding: 2px 20px;
+            text-align: center;
+        }
+        .role-card {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            transition: all 0.3s;
+            cursor: pointer;
+           
+        }
+        .role-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        .role-card.active {
+            border-color: #4a6ee0;
+            background-color: rgba(74, 110, 224, 0.05);
+        }
+        .btn-login {
+            background: linear-gradient(to right, #4a6ee0, #6a11cb);
+            border: none;
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        .btn-login:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+        }
+        .role-icon {
+            font-size: 1.5rem;
+            margin-bottom: 15px;
+            color: #4a6ee0;
+        }
+        .login-form {
+            display: none;
+            padding: 30px;
+        }
+        .login-form.active {
+            display: block;
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-8 col-lg-5">
+                <!-- Login Container -->
+                <div class="login-container">
+                    <!-- Header -->
+                    <div class="login-header">
+                        <h3>Login</h3>
+                    </div>
+                    
+                    <!-- Role Selection -->
+                    <div class="px-4 py-3">
+                        <h5 class="text-center mb-4">Select Your Role</h5>
+                        <div class="row g-3">
+                            <!-- Student Card -->
+                            <div class="col-md-4">
+                                <div class="card role-card text-center  active" data-role="student">
+                                    <div class="role-icon">
+                                        <i class="fas fa-user-graduate"></i>
+                                    </div>
+                                    <h6>Student</h6>
+                                </div>
+                            </div>
+                            <!-- Librarian Card -->
+                            <div class="col-md-4">
+                                <div class="card role-card text-center" data-role="librarian">
+                                    <div class="role-icon">
+                                        <i class="fas fa-book-reader"></i>
+                                    </div>
+                                    <h6>Librarian</h6>
+                                </div>
+                            </div>
+                            <!-- Super Admin Card -->
+                            <div class="col-md-4">
+                                <div class="card role-card text-center" data-role="superadmin">
+                                    <div class="role-icon">
+                                        <i class="fas fa-user-shield"></i>
+                                    </div>
+                                    <h6>Super Admin</h6>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <!-- Login Forms -->
+                    <div class="login-forms-container">
+                        <!-- Student Login Form -->
+                        <div class="login-form active" id="student-login">
+                            <h3 class="text-center mb-4">Student Login</h3>
+                            <form id="student-form">
+                                <div class="mb-3">
+                                    <label for="student-email" class="form-label">Student ID</label>
+                                    <input type="text" class="form-control" id="student-email" placeholder="Enter your student ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="student-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="student-password" placeholder="Enter your password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="student-remember">
+                                    <label class="form-check-label" for="student-remember">Remember me</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-login">Login as Student</button>
+                                </div>
+                            </form>
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-decoration-none small">Forgot password?</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Librarian Login Form -->
+                        <div class="login-form" id="librarian-login">
+                            <h3 class="text-center mb-4">Librarian Login</h3>
+                            <form id="librarian-form">
+                                <div class="mb-3">
+                                    <label for="librarian-email" class="form-label">Librarian ID</label>
+                                    <input type="text" class="form-control" id="librarian-email" placeholder="Enter your librarian ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="librarian-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="librarian-password" placeholder="Enter your password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="librarian-remember">
+                                    <label class="form-check-label" for="librarian-remember">Remember me</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-login">Login as Librarian</button>
+                                </div>
+                            </form>
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-decoration-none small">Forgot password?</a>
+                            </div>
+                        </div>
+                        
+                        <!-- Super Admin Login Form -->
+                        <div class="login-form" id="superadmin-login">
+                            <h3 class="text-center mb-4">Super Admin Login</h3>
+                            <form id="superadmin-form">
+                                <div class="mb-3">
+                                    <label for="superadmin-email" class="form-label">Admin ID</label>
+                                    <input type="text" class="form-control" id="superadmin-email" placeholder="Enter your admin ID" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label for="superadmin-password" class="form-label">Password</label>
+                                    <input type="password" class="form-control" id="superadmin-password" placeholder="Enter your password" required>
+                                </div>
+                                <div class="mb-3 form-check">
+                                    <input type="checkbox" class="form-check-input" id="superadmin-2fa">
+                                    <label class="form-check-label" for="superadmin-2fa">Enable Two-Factor Authentication</label>
+                                </div>
+                                <div class="d-grid">
+                                    <button type="submit" class="btn btn-login">Login as Super Admin</button>
+                                </div>
+                            </form>
+                            <div class="text-center mt-3">
+                                <a href="#" class="text-decoration-none small">Forgot password?</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Role selection functionality
+        document.querySelectorAll('.role-card').forEach(card => {
+            card.addEventListener('click', function() {
+                const role = this.getAttribute('data-role');
+                showLoginForm(role);
+            });
+        });
+
+        function showLoginForm(role) {
+            // Remove active class from all role cards
+            document.querySelectorAll('.role-card').forEach(card => {
+                card.classList.remove('active');
+            });
+            
+            // Add active class to selected role card
+            document.querySelector(`.role-card[data-role="${role}"]`).classList.add('active');
+            
+            // Hide all login forms
+            document.querySelectorAll('.login-form').forEach(form => {
+                form.classList.remove('active');
+            });
+            
+            // Show the selected login form
+            document.getElementById(`${role}-login`).classList.add('active');
+        }
+
+        // Form submission handlers
+        document.getElementById('student-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would validate credentials here
+            // For demo purposes, we'll redirect directly
+            window.location.href = '../student/student_dashboard.html';
+        });
+
+        document.getElementById('librarian-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would validate credentials here
+            // For demo purposes, we'll redirect directly
+            window.location.href = '../librarian/librarian_dashboard.html';
+        });
+
+        document.getElementById('superadmin-form').addEventListener('submit', function(e) {
+            e.preventDefault();
+            // In a real application, you would validate credentials here
+            // For demo purposes, we'll redirect directly
+            window.location.href = '../superadmin/admin_dashboard.html';
+        });
+    </script>
+</body>
+</html>
