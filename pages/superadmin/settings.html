@@ -157,7 +157,7 @@
         <a href="room_booking.html"><i class="bi bi-calendar-check me-2"></i> <span>Room Booking</span></a>
         <a href="reports.html"><i class="bi bi-graph-up-arrow me-2"></i> <span>Reports</span></a>
         <a href="settings.html" class="active"><i class="bi bi-gear me-2"></i> <span>Settings</span></a>
-        <a href="#" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> <span>Logout</span></a>
+        <a href="/Library/index.html" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> <span>Logout</span></a>
     </div>
 
     <!-- MAIN CONTENT -->
@@ -194,9 +194,6 @@
                         </a>
                         <a class="nav-link" href="#fines" data-bs-toggle="tab">
                             <i class="bi bi-cash-coin me-2"></i>Fine Management
-                        </a>
-                        <a class="nav-link" href="#integrations" data-bs-toggle="tab">
-                            <i class="bi bi-plug me-2"></i>Integrations
                         </a>
                         <a class="nav-link" href="#security" data-bs-toggle="tab">
                             <i class="bi bi-shield-lock me-2"></i>Security
@@ -457,48 +454,7 @@
                             </div>
                         </div>
 
-                        <!-- Integrations -->
-                        <div class="tab-pane fade" id="integrations">
-                            <h5 class="section-title">System Integrations</h5>
-                            
-                            <div class="form-section">
-                                <h6 class="section-title">Email Configuration</h6>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">SMTP Server</label>
-                                    <input type="text" class="form-control" value="smtp.gmail.com">
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">SMTP Port</label>
-                                    <input type="number" class="form-control" value="587">
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">Email Address</label>
-                                    <input type="email" class="form-control" value="noreply@library.edu">
-                                </div>
-                            </div>
-                            
-                            <div class="form-section">
-                                <h6 class="section-title">SMS Gateway</h6>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">SMS Provider</label>
-                                    <select class="form-select">
-                                        <option>Twilio</option>
-                                        <option>Nexmo</option>
-                                        <option>Plivo</option>
-                                        <option>Custom</option>
-                                    </select>
-                                </div>
-                                
-                                <div class="mb-3">
-                                    <label class="form-label">API Key</label>
-                                    <div class="api-key">sk_live_51Hx7jGKm8J7x9w4t6y8u9i0o...</div>
-                                </div>
-                            </div>
-                        </div>
+                        
 
                         <!-- Security -->
                         <div class="tab-pane fade" id="security">
