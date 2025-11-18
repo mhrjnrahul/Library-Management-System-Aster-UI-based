@@ -25,12 +25,12 @@
         }
 
         .navbar {
-            background: linear-gradient(135deg, var(--primary-color), #303f9f) !important;
+            background: linear-gradient(135deg, var(--primary-color), #1e40af) !important;
             padding: 1rem 0;
         }
 
         .navbar-brand {
-            font-size: 1.5rem;
+            font-size: 1.8rem;
             font-weight: 700;
         }
 
@@ -180,51 +180,38 @@
 
 <!-- NAVBAR -->
 <nav class="navbar navbar-expand-lg navbar-dark shadow">
-    <div class="container">
-        <!-- Brand -->
-        <a class="navbar-brand fw-bold" href="../index.html">
-            <i class="bi bi-book-half me-2"></i>LibraryMS
-        </a>
+        <div class="container">
+            <a class="navbar-brand fw-bold" href="index.html">
+                <i class="bi bi-book-half me-2"></i>LibraryMS
+            </a>
 
-        <!-- Mobile Toggle -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        <!-- Navbar Links -->
-        <div class="collapse navbar-collapse" id="navbarNavDropdown">
-            <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-                <li class="nav-item">
-                    <a class="nav-link" href="../index.html">Home</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link active" href="books.html">Books</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="contact.html">Contact</a>
-                </li>
-            </ul>
+            <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav me-auto gap-1">
+                    <li class="nav-item"><a class="nav-link" href="/Library/index.html">Home</a></li>
+                    <li class="nav-item"><a class="nav-link active" href="/Library/pages/homepage/books.html">Books</a></li>
+                    <li class="nav-item"><a class="nav-link" href="/Library/pages/homepage/contact.html">Contact</a></li>
+                </ul>
 
-            <!-- Search Box -->
-            <form class="d-flex me-3" role="search">
-                <div class="input-group">
-                    <input class="form-control rounded-pill" type="search" placeholder="Search books..." 
-                           id="searchInput" aria-label="Search">
-                    <button class="btn btn-light rounded-pill ms-2" type="submit">
-                        <i class="bi bi-search"></i>
-                    </button>
+                <form class="d-none d-md-flex me-3">
+                    <div class="input-group">
+                        <input class="form-control rounded-pill" type="search" placeholder="Search books...">
+                        <button class="btn btn-light rounded-pill ms-2" type="submit">
+                            <i class="bi bi-search"></i>
+                        </button>
+                    </div>
+                </form>
+
+                <div class="d-flex gap-2 mt-2 mt-md-0">
+                    <a href="./pages/homepage/login.html" class="btn btn-outline-light px-4">Login</a>
+                    <a href="./pages/homepage/register.html" class="btn btn-warning text-dark fw-semibold px-4">Sign Up</a>
                 </div>
-            </form>
-
-            <!-- Auth Buttons -->
-            <div class="d-flex gap-2">
-                <a href="login.html" class="btn btn-outline-light px-3">Login</a>
-                <a href="register.html" class="btn btn-warning text-dark fw-semibold px-3">Register</a>
             </div>
         </div>
-    </div>
-</nav>
+    </nav>
 
 <!-- SEARCH SECTION -->
 <section class="search-section">
