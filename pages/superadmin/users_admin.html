@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Users - LMS Admin</title>
+
+<!-- Bootstrap CSS -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- Bootstrap Icons -->
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+
+<style>
+body {
+    background-color: #f4f6f9;
+    font-family: 'Segoe UI', sans-serif;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 250px;
+    height: 100vh;
+    background-color: #343a40;
+    position: fixed;
+    top: 0;
+    left: 0;
+    padding-top: 25px;
+}
+.sidebar a {
+    color: #cfd3d7;
+    display: block;
+    padding: 12px 20px;
+    font-size: 15px;
+    text-decoration: none;
+}
+.sidebar a:hover, .sidebar a.active {
+    background-color: #495057;
+    color: #fff;
+}
+
+/* Main content */
+.main {
+    margin-left: 250px;
+    padding: 25px;
+}
+
+.table-wrapper {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 20px;
+    box-shadow: 0px 3px 8px rgba(0,0,0,0.05);
+}
+
+.status-badge {
+    padding: 5px 10px;
+    border-radius: 8px;
+    font-size: 13px;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Sidebar -->
+<div class="sidebar">
+    <h4 class="text-center text-light mb-4">📚 LMS Admin</h4>
+    <a href="admin_dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
+    <a href="users_admin.html" class="active"><i class="bi bi-people me-2"></i> Users</a>
+    <a href="#"><i class="bi bi-book me-2"></i> Books</a>
+    <a href="#"><i class="bi bi-journal-arrow-up me-2"></i> Issue Records</a>
+    <a href="#"><i class="bi bi-cash-coin me-2"></i> Fines</a>
+    <a href="#"><i class="bi bi-graph-up-arrow me-2"></i> Reports</a>
+    <a href="#"><i class="bi bi-gear me-2"></i> Settings</a>
+</div>
+
+<!-- Main Content -->
+<div class="main">
+
+    <!-- Header -->
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2 class="fw-bold">Users</h2>
+        <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal"><i class="bi bi-person-plus"></i> Add User</button>
+    </div>
+
+    <!-- Search & Filters -->
+    <div class="row mb-3 g-2">
+        <div class="col-md-4">
+            <input type="text" class="form-control" placeholder="Search by name or email" id="searchUser">
+        </div>
+        <div class="col-md-3">
+            <select class="form-select" id="filterRole">
+                <option value="">Filter by Role</option>
+                <option value="Admin">Admin</option>
+                <option value="Librarian">Librarian</option>
+                <option value="Staff">Staff</option>
+                <option value="Student">Student</option>
+            </select>
+        </div>
+        <div class="col-md-2">
+            <button class="btn btn-secondary w-100" id="clearFilter">Clear</button>
+        </div>
+    </div>
+
+    <!-- Users Table -->
+    <div class="table-wrapper">
+        <table class="table table-hover align-middle">
+            <thead>
+                <tr>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Role</th>
+                    <th>Status</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody id="usersTable">
+                <tr>
+                    <td>Rahul Maharjan</td>
+                    <td>rahulmhrjn@example.com</td>
+                    <td>Admin</td>
+                    <td><span class="badge bg-success status-badge">Active</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-danger me-1"><i class="bi bi-trash"></i></button>
+                        <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key"></i></button>
+                        <button class="btn btn-sm btn-secondary"><i class="bi bi-box-arrow-right"></i></button>
+                    </td>
+                </tr>
+                <tr>
+                    <td>Anita Rai</td>
+                    <td>anita@example.com</td>
+                    <td>Librarian</td>
+                    <td><span class="badge bg-warning text-dark status-badge">Suspended</span></td>
+                    <td>
+                        <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i></button>
+                        <button class="btn btn-sm btn-danger me-1"><i class="bi bi-trash"></i></button>
+                        <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key"></i></button>
+                        <button class="btn btn-sm btn-secondary"><i class="bi bi-box-arrow-right"></i></button>
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+</div>
+
+<!-- Add User Modal -->
+<div class="modal fade" id="addUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Add New User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="addUserForm">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select" required>
+                    <option value="">Select role</option>
+                    <option value="Admin">Admin</option>
+                    <option value="Librarian">Librarian</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Student">Student</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" required>
+                    <option value="Active">Active</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Add User</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Edit User Modal -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Edit User</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="editUserForm">
+            <div class="mb-3">
+                <label class="form-label">Name</label>
+                <input type="text" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Email</label>
+                <input type="email" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Role</label>
+                <select class="form-select" required>
+                    <option value="Admin">Admin</option>
+                    <option value="Librarian">Librarian</option>
+                    <option value="Staff">Staff</option>
+                    <option value="Student">Student</option>
+                </select>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Status</label>
+                <select class="form-select" required>
+                    <option value="Active">Active</option>
+                    <option value="Suspended">Suspended</option>
+                </select>
+            </div>
+            <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Reset Password Modal -->
+<div class="modal fade" id="resetPasswordModal" tabindex="-1" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Reset Password</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+      <div class="modal-body">
+        <form id="resetPasswordForm">
+            <div class="mb-3">
+                <label class="form-label">New Password</label>
+                <input type="password" class="form-control" required>
+            </div>
+            <div class="mb-3">
+                <label class="form-label">Confirm Password</label>
+                <input type="password" class="form-control" required>
+            </div>
+            <button type="submit" class="btn btn-warning w-100">Reset Password</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap JS -->
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+// --- Search & Filter ---
+const searchInput = document.getElementById('searchUser');
+const filterRole = document.getElementById('filterRole');
+const usersTable = document.getElementById('usersTable');
+const clearBtn = document.getElementById('clearFilter');
+
+function filterUsers() {
+    const searchText = searchInput.value.toLowerCase();
+    const roleText = filterRole.value.toLowerCase();
+    Array.from(usersTable.rows).forEach(row => {
+        const name = row.cells[0].innerText.toLowerCase();
+        const email = row.cells[1].innerText.toLowerCase();
+        const role = row.cells[2].innerText.toLowerCase();
+        row.style.display = ((name.includes(searchText) || email.includes(searchText)) &&
+                             (role.includes(roleText) || roleText === '')) ? '' : 'none';
+    });
+}
+
+searchInput.addEventListener('input', filterUsers);
+filterRole.addEventListener('change', filterUsers);
+clearBtn.addEventListener('click', () => {
+    searchInput.value = '';
+    filterRole.value = '';
+    filterUsers();
+});
+
+// --- Dynamic Edit/Delete/Add User ---
+let currentEditRow = null;
+
+function attachRowEvents(row) {
+    const editBtn = row.querySelector('.btn-info');
+    const delBtn = row.querySelector('.btn-danger');
+    const resetBtn = row.querySelector('.btn-warning');
+    const logoutBtn = row.querySelector('.btn-secondary');
+    const statusBadge = row.querySelector('.status-badge');
+
+    // Edit
+    editBtn.addEventListener('click', function() {
+        currentEditRow = row;
+        const cells = row.cells;
+        const form = document.getElementById('editUserForm');
+        form.elements[0].value = cells[0].innerText;
+        form.elements[1].value = cells[1].innerText;
+        form.elements[2].value = cells[2].innerText;
+        form.elements[3].value = cells[3].innerText === "Active" ? "Active" : "Suspended";
+    });
+
+    // Delete
+    delBtn.addEventListener('click', function() {
+        if(confirm("Are you sure you want to delete this user?")) row.remove();
+    });
+
+    // Reset Password
+    resetBtn.addEventListener('click', function() {
+        const form = document.getElementById('resetPasswordForm');
+        form.dataset.rowName = row.cells[0].innerText; // store user name
+    });
+
+    // Force Logout
+    logoutBtn.addEventListener('click', function() {
+        alert(`User ${row.cells[0].innerText} has been logged out (simulated)`);
+    });
+
+    // Toggle Status
+    statusBadge.addEventListener('click', function() {
+        if(statusBadge.innerText === "Active") {
+            statusBadge.innerText = "Suspended";
+            statusBadge.classList.replace("bg-success", "bg-danger");
+        } else {
+            statusBadge.innerText = "Active";
+            statusBadge.classList.replace("bg-danger", "bg-success");
+        }
+    });
+}
+
+// Attach existing rows
+Array.from(usersTable.rows).forEach(row => attachRowEvents(row));
+
+// Edit form submit
+document.getElementById('editUserForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    if(!currentEditRow) return;
+    const form = e.target;
+    const cells = currentEditRow.cells;
+    cells[0].innerText = form.elements[0].value;
+    cells[1].innerText = form.elements[1].value;
+    cells[2].innerText = form.elements[2].value;
+    const status = form.elements[3].value;
+    cells[3].innerHTML = `<span class="badge ${status === "Active" ? "bg-success" : "bg-danger"} status-badge">${status}</span>`;
+    attachRowEvents(currentEditRow); // reattach events to new badge
+    bootstrap.Modal.getInstance(document.getElementById('editUserModal')).hide();
+});
+
+// Add user form
+document.getElementById('addUserForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = e.target;
+    const newRow = usersTable.insertRow();
+    newRow.innerHTML = `
+        <td>${form.elements[0].value}</td>
+        <td>${form.elements[1].value}</td>
+        <td>${form.elements[2].value}</td>
+        <td><span class="badge ${form.elements[3].value === "Active" ? "bg-success" : "bg-danger"} status-badge">${form.elements[3].value}</span></td>
+        <td>
+            <button class="btn btn-sm btn-info me-1" data-bs-toggle="modal" data-bs-target="#editUserModal"><i class="bi bi-pencil"></i></button>
+            <button class="btn btn-sm btn-danger me-1"><i class="bi bi-trash"></i></button>
+            <button class="btn btn-sm btn-warning me-1" data-bs-toggle="modal" data-bs-target="#resetPasswordModal"><i class="bi bi-key"></i></button>
+            <button class="btn btn-sm btn-secondary"><i class="bi bi-box-arrow-right"></i></button>
+        </td>
+    `;
+    attachRowEvents(newRow);
+    bootstrap.Modal.getInstance(document.getElementById('addUserModal')).hide();
+    form.reset();
+});
+
+// Reset password form
+document.getElementById('resetPasswordForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    const form = e.target;
+    alert(`Password for ${form.dataset.rowName} has been reset (simulated)`);
+    bootstrap.Modal.getInstance(document.getElementById('resetPasswordModal')).hide();
+    form.reset();
+});
+</script>
+
+</body>
+</html>
