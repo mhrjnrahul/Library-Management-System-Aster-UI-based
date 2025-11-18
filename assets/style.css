@@ -1,3 +1,17 @@
+/* .bg-color{
+    background-color:rgb(2, 13, 61);
+} */
+.bg-color{
+    /* background: linear-gradient(to right, #4a6ee0, #6a11cb); */
+    background-color:rgb(2, 24, 119);
+}
+.text-color{
+    color: rgb(2, 24, 119);
+}
+.btn-color{
+    background-color:rgb(2, 24, 119);
+    color: white;
+}
 body {
     font-family: Arial, Helvetica, sans-serif;
     background: #f4f4f4;

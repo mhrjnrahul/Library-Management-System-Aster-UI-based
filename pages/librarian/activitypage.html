@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Activity Log</title>
+
+  <!-- Bootstrap -->
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <!-- Icons -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+  <style>
+    body {
+      background-color: #f5f6fa;
+    }
+
+    .sidebar {
+      width: 240px;
+      min-height: 100vh;
+      background: #1e293b;
+      color: white;
+      position: fixed;
+      left: 0;
+      top: 0;
+      padding: 20px 10px;
+    }
+
+    .sidebar a {
+      color: #e2e8f0;
+      text-decoration: none;
+      padding: 12px 15px;
+      border-radius: 8px;
+      display: block;
+      margin-bottom: 8px;
+      transition: 0.2s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: #334155;
+    }
+
+    .content-area {
+      margin-left: 250px;
+      padding: 20px 30px;
+    }
+
+    /* Activity Badge Styles */
+    .activity-type {
+      font-weight: 600;
+      padding: 7px 14px;
+      border-radius: 8px;
+      font-size: 0.85rem;
+      display: inline-block;
+      min-width: 140px;
+      text-align: center;
+    }
+
+    .add {
+      background: #d1fae5;
+      color: #065f46;
+    }
+
+    .update {
+      background: #dbeafe;
+      color: #1e40af;
+    }
+
+    .delete {
+      background: #fee2e2;
+      color: #991b1b;
+    }
+
+    .issue {
+      background: #fef3c7;
+      color: #92400e;
+    }
+
+    .return {
+      background: #f3e8ff;
+      color: #6b21a8;
+    }
+
+    table tbody tr {
+      height: 62px;
+    }
+
+    table td,
+    table th {
+      vertical-align: middle;
+      padding: 14px 12px !important;
+    }
+
+    .card-custom {
+      border-radius: 12px;
+      padding: 10px 20px;
+    }
+  </style>
+
+</head>
+
+<body>
+
+  <!-- SIDEBAR -->
+  <div class="sidebar h-100">
+    <h4 class="text-center fw-bold mb-4">Library Admin</h4>
+
+    <a href="librarian_dashboard.html"><i class="bi bi-speedometer2 me-2"></i>Dashboard</a>
+    <a href="books.html"><i class="bi bi-book me-2"></i>Books</a>
+    <a href="members.html"><i class="bi bi-people me-2"></i>Members</a>
+    <a href="activity.html" class="active"><i class="bi bi-clock-history me-2"></i>Activity</a>
+    <a href="overdue_book.html"><i class="bi bi-exclamation-triangle me-2"></i>Overdue Books</a>
+    <a href="#"><i class="bi bi-gear me-2"></i>Settings</a>
+    <a href="#" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i>Logout</a>
+  </div>
+
+  <!-- MAIN CONTENT -->
+  <div class="content-area">
+
+    <!-- Top bar -->
+    <div class="d-flex flex-wrap justify-content-between align-items-center mb-4">
+      <h3 class="fw-bold">Activity Log</h3>
+
+      <div style="max-width: 350px;" class="mt-2 mt-md-0">
+        <input type="text" class="form-control" placeholder="Search activities...">
+      </div>
+    </div>
+
+    <!-- Activity Table -->
+    <div class="card card-custom shadow-sm">
+      <div class="table-responsive mt-3">
+
+        <table class="table table-bordered table-striped table-sm text-center align-middle">
+          <thead>
+            <tr>
+              <th>Activity ID</th>
+              <th>User</th>
+              <th>Action</th>
+              <th>Details</th>
+              <th>Date & Time</th>
+            </tr>
+          </thead>
+
+          <tbody>
+            <tr>
+              <td>001</td>
+              <td>Ram</td>
+              <td><span class="activity-type add">Book Added</span></td>
+              <td>Added "Programming in C"</td>
+              <td>2025-11-01 • 10:15 AM</td>
+            </tr>
+
+            <tr>
+              <td>002</td>
+              <td>Shyam</td>
+              <td><span class="activity-type issue">Book Issued</span></td>
+              <td>Issued "Mathematics II" to Member #120</td>
+              <td>2025-11-01 • 11:05 AM</td>
+            </tr>
+
+            <tr>
+              <td>003</td>
+              <td>Sita</td>
+              <td><span class="activity-type return">Book Returned</span></td>
+              <td>Returned "Physics for Engineers"</td>
+              <td>2025-11-02 • 09:20 AM</td>
+            </tr>
+
+            <tr>
+              <td>004</td>
+              <td>Gopal</td>
+              <td><span class="activity-type update">Book Updated</span></td>
+              <td>Updated edition for "Web Development"</td>
+              <td>2025-11-02 • 12:45 PM</td>
+            </tr>
+
+            <tr>
+              <td>005</td>
+              <td>Hari</td>
+              <td><span class="activity-type delete">Book Deleted</span></td>
+              <td>Removed damaged book "Mechanics"</td>
+              <td>2025-11-03 • 02:10 PM</td>
+            </tr>
+
+          </tbody>
+        </table>
+
+      </div>
+    </div>
+
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+</body>
+
+</html>

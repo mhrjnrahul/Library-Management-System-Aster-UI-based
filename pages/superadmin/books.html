@@ -1,0 +1,729 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book & Inventory Management</title>
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- Bootstrap Icons -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
+    <!-- DataTables CSS -->
+    <link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/dataTables.bootstrap5.min.css">
+
+    <style>
+        body {
+            background-color: #f5f6fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+
+        .sidebar {
+            width: 240px;
+            min-height: 100vh;
+            background: #1e293b;
+            color: white;
+            position: fixed;
+            left: 0;
+            top: 0;
+            padding: 20px 10px;
+        }
+
+        .sidebar a {
+            color: #e2e8f0;
+            text-decoration: none;
+            padding: 12px 15px;
+            border-radius: 8px;
+            display: block;
+            margin-bottom: 8px;
+            transition: 0.2s;
+        }
+
+        .sidebar a:hover,
+        .sidebar a.active {
+            background: #334155;
+        }
+
+        .content-area {
+            margin-left: 250px;
+            padding: 20px 30px;
+        }
+
+        .card {
+            border: none;
+            border-radius: 12px;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.15);
+        }
+
+        .stat-card {
+            height: 120px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .book-cover {
+            height: 180px;
+            object-fit: cover;
+            border-radius: 8px 8px 0 0;
+        }
+
+        .badge-status {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+        }
+
+        .action-buttons .btn {
+            margin-right: 5px;
+            margin-bottom: 5px;
+        }
+
+        .table th {
+            border-top: none;
+            font-weight: 600;
+            color: #475569;
+        }
+
+        .nav-tabs .nav-link.active {
+            font-weight: 600;
+            border-bottom: 3px solid #0d6efd;
+        }
+
+        .search-box {
+            position: relative;
+        }
+
+        .search-box .form-control {
+            padding-right: 40px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: #6c757d;
+        }
+
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 70px;
+                text-align: center;
+            }
+            .sidebar a span {
+                display: none;
+            }
+            .sidebar h4 {
+                font-size: 1rem;
+            }
+            .content-area {
+                margin-left: 70px;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <!-- SIDEBAR -->
+    <div class="sidebar h-100">
+        <h4 class="text-center fw-bold mb-4">Super Admin</h4>
+        <a href="admin_dashboard.html"><i class="bi bi-speedometer2 me-2"></i> <span>Dashboard</span></a>
+        <a href="users_admin.html"><i class="bi bi-people me-2"></i> <span>Users</span></a>
+        <a href="books.html" class="active"><i class="bi bi-book me-2"></i> <span>Books</span></a>
+        <a href="issue_records.html"><i class="bi bi-journal-arrow-up me-2"></i> <span>Issue Records</span></a>
+        <a href="fines.html"><i class="bi bi-cash-coin me-2"></i> <span>Fines</span></a>
+        <a href="room_booking.html"><i class="bi bi-calendar-check me-2"></i> <span>Room Booking</span></a>
+        <a href="reports.html"><i class="bi bi-graph-up-arrow me-2"></i> <span>Reports</span></a>
+        <a href="settings.html"><i class="bi bi-gear me-2"></i> <span>Settings</span></a>
+        <a href="#" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> <span>Logout</span></a>
+    </div>
+
+    <!-- MAIN CONTENT -->
+    <div class="content-area">
+        <!-- Top bar -->
+        <div class="d-flex flex-column flex-md-row justify-content-between align-items-start align-items-md-center mb-4">
+            <div>
+                <h3 class="fw-bold">Book & Inventory Management</h3>
+                <p class="text-muted mb-0">Manage all books, inventory, and catalog information</p>
+            </div>
+
+            <div class="d-flex flex-wrap gap-2 align-items-center mt-2 mt-md-0">
+                <div class="search-box">
+                    <input type="text" class="form-control" placeholder="Search books, authors, ISBN..." id="searchBooks">
+                    <i class="bi bi-search"></i>
+                </div>
+                <button class="btn btn-outline-primary" data-bs-toggle="modal" data-bs-target="#importModal">
+                    <i class="bi bi-upload me-1"></i> Import
+                </button>
+                <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addBookModal">
+                    <i class="bi bi-plus-circle me-1"></i> Add Book
+                </button>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="row g-3 mb-4">
+            <div class="col-xl-3 col-md-6">
+                <div class="card p-3 stat-card border-start-0 border-top-0 border-end-0 border-bottom-3" style="border-bottom-color: #0d6efd;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-secondary mb-1">Total Books</h6>
+                            <h3 class="fw-bold mb-0">8,913</h3>
+                        </div>
+                        <div class="text-primary">
+                            <i class="bi bi-book fs-2"></i>
+                        </div>
+                    </div>
+                    <small class="text-success"><i class="bi bi-arrow-up"></i> 4% increase</small>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card p-3 stat-card border-start-0 border-top-0 border-end-0 border-bottom-3" style="border-bottom-color: #198754;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-secondary mb-1">Available</h6>
+                            <h3 class="fw-bold mb-0">7,842</h3>
+                        </div>
+                        <div class="text-success">
+                            <i class="bi bi-check-circle fs-2"></i>
+                        </div>
+                    </div>
+                    <small class="text-success">87.9% of inventory</small>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card p-3 stat-card border-start-0 border-top-0 border-end-0 border-bottom-3" style="border-bottom-color: #fd7e14;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-secondary mb-1">Issued</h6>
+                            <h3 class="fw-bold mb-0">421</h3>
+                        </div>
+                        <div class="text-warning">
+                            <i class="bi bi-journal-arrow-up fs-2"></i>
+                        </div>
+                    </div>
+                    <small class="text-danger"><i class="bi bi-arrow-down"></i> 3% decrease</small>
+                </div>
+            </div>
+
+            <div class="col-xl-3 col-md-6">
+                <div class="card p-3 stat-card border-start-0 border-top-0 border-end-0 border-bottom-3" style="border-bottom-color: #dc3545;">
+                    <div class="d-flex justify-content-between align-items-center">
+                        <div>
+                            <h6 class="text-secondary mb-1">Damaged/Lost</h6>
+                            <h3 class="fw-bold mb-0">18</h3>
+                        </div>
+                        <div class="text-danger">
+                            <i class="bi bi-exclamation-triangle fs-2"></i>
+                        </div>
+                    </div>
+                    <small class="text-danger">0.2% of inventory</small>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tabs for different views -->
+        <ul class="nav nav-tabs mb-4" id="booksTab" role="tablist">
+            <li class="nav-item" role="presentation">
+                <button class="nav-link active" id="all-books-tab" data-bs-toggle="tab" data-bs-target="#all-books" type="button" role="tab">All Books</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="available-tab" data-bs-toggle="tab" data-bs-target="#available" type="button" role="tab">Available</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="issued-tab" data-bs-toggle="tab" data-bs-target="#issued" type="button" role="tab">Issued</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="reserved-tab" data-bs-toggle="tab" data-bs-target="#reserved" type="button" role="tab">Reserved</button>
+            </li>
+            <li class="nav-item" role="presentation">
+                <button class="nav-link" id="damaged-tab" data-bs-toggle="tab" data-bs-target="#damaged" type="button" role="tab">Damaged/Lost</button>
+            </li>
+        </ul>
+
+        <!-- Tab Content -->
+        <div class="tab-content" id="booksTabContent">
+            <!-- All Books Tab -->
+            <div class="tab-pane fade show active" id="all-books" role="tabpanel">
+                <div class="card">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0">All Books</h5>
+                        <div class="d-flex">
+                            <select class="form-select form-select-sm me-2" style="width: auto;">
+                                <option>All Categories</option>
+                                <option>Fiction</option>
+                                <option>Science</option>
+                                <option>Technology</option>
+                                <option>History</option>
+                            </select>
+                            <button class="btn btn-sm btn-outline-secondary">
+                                <i class="bi bi-download me-1"></i> Export
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover mb-0" id="booksTable">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th>Book ID</th>
+                                        <th>Cover</th>
+                                        <th>Title</th>
+                                        <th>Author</th>
+                                        <th>ISBN</th>
+                                        <th>Category</th>
+                                        <th>Status</th>
+                                        <th>Copies</th>
+                                        <th>Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td>BK001</td>
+                                        <td>
+                                            <img src="/api/placeholder/40/50" class="rounded" alt="Book Cover" width="40" height="50">
+                                        </td>
+                                        <td>The Great Gatsby</td>
+                                        <td>F. Scott Fitzgerald</td>
+                                        <td>978-0-7432-7356-5</td>
+                                        <td>Fiction</td>
+                                        <td><span class="badge bg-success badge-status">Available</span></td>
+                                        <td>5</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK002</td>
+                                        <td>
+                                            <img src="/api/placeholder/40/50" class="rounded" alt="Book Cover" width="40" height="50">
+                                        </td>
+                                        <td>To Kill a Mockingbird</td>
+                                        <td>Harper Lee</td>
+                                        <td>978-0-06-112008-4</td>
+                                        <td>Fiction</td>
+                                        <td><span class="badge bg-warning badge-status">Issued</span></td>
+                                        <td>3</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK003</td>
+                                        <td>
+                                            <img src="/api/placeholder/40/50" class="rounded" alt="Book Cover" width="40" height="50">
+                                        </td>
+                                        <td>A Brief History of Time</td>
+                                        <td>Stephen Hawking</td>
+                                        <td>978-0-553-10953-5</td>
+                                        <td>Science</td>
+                                        <td><span class="badge bg-success badge-status">Available</span></td>
+                                        <td>2</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK004</td>
+                                        <td>
+                                            <img src="/api/placeholder/40/50" class="rounded" alt="Book Cover" width="40" height="50">
+                                        </td>
+                                        <td>Clean Code</td>
+                                        <td>Robert C. Martin</td>
+                                        <td>978-0-13-235088-4</td>
+                                        <td>Technology</td>
+                                        <td><span class="badge bg-primary badge-status">Reserved</span></td>
+                                        <td>4</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>BK005</td>
+                                        <td>
+                                            <img src="/api/placeholder/40/50" class="rounded" alt="Book Cover" width="40" height="50">
+                                        </td>
+                                        <td>The Hobbit</td>
+                                        <td>J.R.R. Tolkien</td>
+                                        <td>978-0-547-92823-5</td>
+                                        <td>Fantasy</td>
+                                        <td><span class="badge bg-danger badge-status">Damaged</span></td>
+                                        <td>1</td>
+                                        <td>
+                                            <div class="action-buttons">
+                                                <button class="btn btn-sm btn-outline-primary" data-bs-toggle="modal" data-bs-target="#editBookModal"><i class="bi bi-pencil"></i></button>
+                                                <button class="btn btn-sm btn-outline-info"><i class="bi bi-eye"></i></button>
+                                                <button class="btn btn-sm btn-outline-danger"><i class="bi bi-trash"></i></button>
+                                            </div>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Other tabs would have similar structure but filtered content -->
+            <div class="tab-pane fade" id="available" role="tabpanel">
+                <div class="alert alert-info">Available books - similar structure as All Books but filtered</div>
+            </div>
+            <div class="tab-pane fade" id="issued" role="tabpanel">
+                <div class="alert alert-info">Issued books - similar structure as All Books but filtered</div>
+            </div>
+            <div class="tab-pane fade" id="reserved" role="tabpanel">
+                <div class="alert alert-info">Reserved books - similar structure as All Books but filtered</div>
+            </div>
+            <div class="tab-pane fade" id="damaged" role="tabpanel">
+                <div class="alert alert-info">Damaged/Lost books - similar structure as All Books but filtered</div>
+            </div>
+        </div>
+
+        <!-- Book Grid View -->
+        <div class="mt-5">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5>Book Collection</h5>
+                <div class="form-check form-switch">
+                    <input class="form-check-input" type="checkbox" id="gridViewToggle" checked>
+                    <label class="form-check-label" for="gridViewToggle">Grid View</label>
+                </div>
+            </div>
+
+            <div class="row g-4" id="bookGridView">
+                <!-- Book 1 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        <img src="/api/placeholder/200/250" class="card-img-top book-cover" alt="Book Cover">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold">The Great Gatsby</h6>
+                            <p class="card-text text-muted small mb-1">F. Scott Fitzgerald</p>
+                            <div class="mt-auto">
+                                <p class="text-success fw-semibold mb-2 small">Available (5 copies)</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-sm btn-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Quick Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 2 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        <img src="/api/placeholder/200/250" class="card-img-top book-cover" alt="Book Cover">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold">To Kill a Mockingbird</h6>
+                            <p class="card-text text-muted small mb-1">Harper Lee</p>
+                            <div class="mt-auto">
+                                <p class="text-warning fw-semibold mb-2 small">Issued (3 copies)</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-sm btn-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Quick Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 3 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        <img src="/api/placeholder/200/250" class="card-img-top book-cover" alt="Book Cover">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold">A Brief History of Time</h6>
+                            <p class="card-text text-muted small mb-1">Stephen Hawking</p>
+                            <div class="mt-auto">
+                                <p class="text-success fw-semibold mb-2 small">Available (2 copies)</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-sm btn-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Quick Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Book 4 -->
+                <div class="col-md-4 col-lg-3">
+                    <div class="card h-100">
+                        <img src="/api/placeholder/200/250" class="card-img-top book-cover" alt="Book Cover">
+                        <div class="card-body d-flex flex-column">
+                            <h6 class="card-title fw-bold">Clean Code</h6>
+                            <p class="card-text text-muted small mb-1">Robert C. Martin</p>
+                            <div class="mt-auto">
+                                <p class="text-primary fw-semibold mb-2 small">Reserved (4 copies)</p>
+                                <div class="d-grid gap-2">
+                                    <button class="btn btn-sm btn-primary">View Details</button>
+                                    <button class="btn btn-sm btn-outline-secondary">Quick Edit</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Add Book Modal -->
+    <div class="modal fade" id="addBookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Add New Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="addBookForm">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Author</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">ISBN</label>
+                                    <input type="text" class="form-control" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select" required>
+                                        <option value="">Select category</option>
+                                        <option value="Fiction">Fiction</option>
+                                        <option value="Science">Science</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="History">History</option>
+                                        <option value="Fantasy">Fantasy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Publisher</label>
+                                    <input type="text" class="form-control">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Publication Year</label>
+                                    <input type="number" class="form-control" min="1900" max="2023">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Number of Copies</label>
+                                    <input type="number" class="form-control" min="1" value="1">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Shelf Location</label>
+                                    <input type="text" class="form-control" placeholder="e.g., A-12-4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3"></textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Cover Image</label>
+                            <input type="file" class="form-control" accept="image/*">
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Add Book</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Edit Book Modal -->
+    <div class="modal fade" id="editBookModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog modal-lg">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Edit Book</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="editBookForm">
+                        <!-- Similar structure to add book form but with pre-filled values -->
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Title</label>
+                                    <input type="text" class="form-control" value="The Great Gatsby" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Author</label>
+                                    <input type="text" class="form-control" value="F. Scott Fitzgerald" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">ISBN</label>
+                                    <input type="text" class="form-control" value="978-0-7432-7356-5" required>
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Category</label>
+                                    <select class="form-select" required>
+                                        <option value="Fiction" selected>Fiction</option>
+                                        <option value="Science">Science</option>
+                                        <option value="Technology">Technology</option>
+                                        <option value="History">History</option>
+                                        <option value="Fantasy">Fantasy</option>
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="mb-3">
+                                    <label class="form-label">Publisher</label>
+                                    <input type="text" class="form-control" value="Scribner">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Publication Year</label>
+                                    <input type="number" class="form-control" value="1925" min="1900" max="2023">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Number of Copies</label>
+                                    <input type="number" class="form-control" value="5" min="1">
+                                </div>
+                                <div class="mb-3">
+                                    <label class="form-label">Shelf Location</label>
+                                    <input type="text" class="form-control" value="FIC-12-4">
+                                </div>
+                            </div>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Description</label>
+                            <textarea class="form-control" rows="3">A classic novel of the Jazz Age...</textarea>
+                        </div>
+                        <div class="mb-3">
+                            <label class="form-label">Status</label>
+                            <select class="form-select" required>
+                                <option value="Available" selected>Available</option>
+                                <option value="Issued">Issued</option>
+                                <option value="Reserved">Reserved</option>
+                                <option value="Damaged">Damaged</option>
+                                <option value="Lost">Lost</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Save Changes</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Import Books Modal -->
+    <div class="modal fade" id="importModal" tabindex="-1" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">Import Books</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <form id="importBooksForm">
+                        <div class="mb-3">
+                            <label class="form-label">Select CSV File</label>
+                            <input type="file" class="form-control" accept=".csv">
+                            <div class="form-text">Upload a CSV file with book details. <a href="#">Download template</a></div>
+                        </div>
+                        <div class="mb-3 form-check">
+                            <input type="checkbox" class="form-check-input" id="updateExisting">
+                            <label class="form-check-label" for="updateExisting">Update existing books</label>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100">Import Books</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- DataTables JS -->
+    <script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+    <script src="https://cdn.datatables.net/1.13.6/js/dataTables.bootstrap5.min.js"></script>
+
+    <script>
+        // Initialize DataTable
+        document.addEventListener('DOMContentLoaded', function() {
+            // In a real implementation, you would initialize DataTable here
+            // $('#booksTable').DataTable();
+            
+            // Search functionality
+            const searchInput = document.getElementById('searchBooks');
+            searchInput.addEventListener('input', function() {
+                const searchText = this.value.toLowerCase();
+                const rows = document.querySelectorAll('#booksTable tbody tr');
+                
+                rows.forEach(row => {
+                    const text = row.textContent.toLowerCase();
+                    row.style.display = text.includes(searchText) ? '' : 'none';
+                });
+            });
+            
+            // Grid view toggle
+            const gridViewToggle = document.getElementById('gridViewToggle');
+            const bookGridView = document.getElementById('bookGridView');
+            const booksTableContainer = document.querySelector('#all-books .card');
+            
+            gridViewToggle.addEventListener('change', function() {
+                if (this.checked) {
+                    bookGridView.style.display = 'flex';
+                    booksTableContainer.style.display = 'none';
+                } else {
+                    bookGridView.style.display = 'none';
+                    booksTableContainer.style.display = 'block';
+                }
+            });
+            
+            // Form submission handlers
+            document.getElementById('addBookForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Book added successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('addBookModal')).hide();
+                this.reset();
+            });
+            
+            document.getElementById('editBookForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Book updated successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('editBookModal')).hide();
+            });
+            
+            document.getElementById('importBooksForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                alert('Books imported successfully!');
+                bootstrap.Modal.getInstance(document.getElementById('importModal')).hide();
+                this.reset();
+            });
+        });
+    </script>
+</body>
+
+</html>
