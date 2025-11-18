@@ -1,0 +1,506 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Books Catalog</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.8.1/font/bootstrap-icons.css">
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --dark-color: #34495e;
+        }
+        
+        body {
+            background-color: #f8f9fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        .navbar {
+            background-color: var(--primary-color);
+        }
+        
+        .book-card {
+            transition: transform 0.3s, box-shadow 0.3s;
+            height: 100%;
+            border: none;
+            border-radius: 8px;
+            overflow: hidden;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+        }
+        
+        .book-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+        }
+        
+        .book-cover {
+            height: 220px;
+            object-fit: cover;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .availability-badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+        }
+        
+        .book-title {
+            color: var(--primary-color);
+            font-weight: 600;
+            line-height: 1.3;
+            font-size: 1.1rem;
+            height: 2.6rem;
+            overflow: hidden;
+            display: -webkit-box;
+           
+        }
+        
+        .book-author {
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        .book-meta {
+            font-size: 0.85rem;
+            color: #777;
+        }
+        
+        .rating {
+            color: #f39c12;
+        }
+        
+        .action-btn {
+            width: 100%;
+            margin-top: 10px;
+        }
+        
+        .availability-available {
+            background-color: #2ecc71;
+        }
+        
+        .availability-checked-out {
+            background-color: #e74c3c;
+        }
+        
+        .search-box {
+            border-radius: 30px;
+            padding: 12px 20px;
+        }
+        
+        .search-btn {
+            border-radius: 30px;
+            padding: 12px 25px;
+        }
+        
+        .pagination .page-link {
+            color: var(--primary-color);
+        }
+        
+        .pagination .page-item.active .page-link {
+            background-color: var(--primary-color);
+            border-color: var(--primary-color);
+        }
+        
+        .category-badge {
+            background-color: var(--secondary-color);
+            color: white;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            color: white;
+            padding: 30px 0;
+            margin-bottom: 30px;
+            border-radius: 0 0 10px 10px;
+        }
+        
+        .stats-card {
+            background-color: white;
+            border-radius: 8px;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+            margin-bottom: 20px;
+        }
+        
+        .stats-number {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: var(--primary-color);
+            margin-bottom: 5px;
+        }
+        
+        .stats-label {
+            font-size: 0.9rem;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+  
+   
+
+    <!-- Main Content -->
+    <div class="container">
+        <!-- Stats Section -->
+        <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-number">10,245</div>
+                    <div class="stats-label">Total Books</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-number">8,732</div>
+                    <div class="stats-label">Available Now</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-number">24</div>
+                    <div class="stats-label">New This Month</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <div class="stats-number">12</div>
+                    <div class="stats-label">Categories</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Results Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <div>
+                <h2 class="mb-1">All Books</h2>
+                <p class="text-muted mb-0">Showing 1-12 of 10,245 books</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <!-- Sort Options -->
+                <div class="me-3">
+                    <select class="form-select">
+                        <option selected>Sort by Title</option>
+                        <option>Sort by Author</option>
+                        <option>Sort by Popularity</option>
+                        <option>Sort by Publication Date</option>
+                    </select>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Book Grid -->
+        <div class="row">
+            <!-- Book Card 1 -->
+            <div class="col-md-3 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="/img/books/seto dharti.png" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        
+                        <h5 class="card-title book-title mt-2">The Pragmatic Programmer: Your Journey to Mastery</h5>
+                        <p class="card-text book-author">David Thomas, Andrew Hunt</p>
+                        
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 2 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/556e7a/FFFFFF?text=Clean+Code" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-checked-out">Due 10/15/2023</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Computer Science</span>
+                        <h5 class="card-title book-title mt-2">Clean Code: A Handbook of Agile Software Craftsmanship</h5>
+                        <p class="card-text book-author">Robert C. Martin</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> QA 76.76 .D47 M37 2008</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <span class="text-muted ms-1">(4.2)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary action-btn">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 3 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/5a7a8a/FFFFFF?text=Design+Patterns" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Computer Science</span>
+                        <h5 class="card-title book-title mt-2">Design Patterns: Elements of Reusable Object-Oriented Software</h5>
+                        <p class="card-text book-author">Erich Gamma, Richard Helm, Ralph Johnson, John Vlissides</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> QA 76.64 .D47 1994</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="text-muted ms-1">(4.8)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 4 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/4a6572/FFFFFF?text=Introduction+to+Algorithms" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Computer Science</span>
+                        <h5 class="card-title book-title mt-2">Introduction to Algorithms</h5>
+                        <p class="card-text book-author">Thomas H. Cormen, Charles E. Leiserson, Ronald L. Rivest, Clifford Stein</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> QA 76.6 .I5858 2009</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <span class="text-muted ms-1">(4.3)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 5 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/556e7a/FFFFFF?text=The+Great+Gatsby" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Fiction</span>
+                        <h5 class="card-title book-title mt-2">The Great Gatsby</h5>
+                        <p class="card-text book-author">F. Scott Fitzgerald</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> PS 3511 .I9 G7 2004</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="text-muted ms-1">(4.7)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 6 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/5a7a8a/FFFFFF?text=Sapiens" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-checked-out">Due 11/05/2023</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">History</span>
+                        <h5 class="card-title book-title mt-2">Sapiens: A Brief History of Humankind</h5>
+                        <p class="card-text book-author">Yuval Noah Harari</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> CB 113 .H4 H3713 2015</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="text-muted ms-1">(4.6)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary action-btn">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 7 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/4a6572/FFFFFF?text=Atomic+Habits" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Self-Help</span>
+                        <h5 class="card-title book-title mt-2">Atomic Habits: An Easy & Proven Way to Build Good Habits & Break Bad Ones</h5>
+                        <p class="card-text book-author">James Clear</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> BF 335 .C525 2018</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star"></i>
+                                <span class="text-muted ms-1">(4.4)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 8 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/556e7a/FFFFFF?text=Educated" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-available">Available</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Memoir</span>
+                        <h5 class="card-title book-title mt-2">Educated: A Memoir</h5>
+                        <p class="card-text book-author">Tara Westover</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> CT 3262 .I2 W47 2018</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <span class="text-muted ms-1">(4.8)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-primary action-btn">Borrow</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Book Card 9 -->
+            <div class="col-md-4 mb-4">
+                <div class="card book-card">
+                    <div class="position-relative">
+                        <img src="https://via.placeholder.com/300x400/5a7a8a/FFFFFF?text=The+Silent+Patient" class="card-img-top book-cover" alt="Book Cover">
+                        <span class="badge availability-badge availability-checked-out">Due 10/28/2023</span>
+                    </div>
+                    <div class="card-body">
+                        <span class="category-badge">Mystery</span>
+                        <h5 class="card-title book-title mt-2">The Silent Patient</h5>
+                        <p class="card-text book-author">Alex Michaelides</p>
+                        <div class="book-meta mb-2">
+                            <div><strong>Call No:</strong> PR 6113 .I2645 S55 2019</div>
+                            <div class="rating">
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-fill"></i>
+                                <i class="bi bi-star-half"></i>
+                                <span class="text-muted ms-1">(4.5)</span>
+                            </div>
+                        </div>
+                        <div class="d-grid gap-2">
+                            <button class="btn btn-outline-primary action-btn">Reserve</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Pagination -->
+        <nav aria-label="Book pagination" class="mt-4">
+            <ul class="pagination justify-content-center">
+                <li class="page-item disabled">
+                    <a class="page-link" href="#" tabindex="-1">Previous</a>
+                </li>
+                <li class="page-item active"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item">
+                    <a class="page-link" href="#">Next</a>
+                </li>
+            </ul>
+        </nav>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-dark text-light py-4 mt-5">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-6">
+                    <h5>University Library</h5>
+                    <p>Providing access to knowledge and resources for our academic community.</p>
+                </div>
+                <div class="col-md-3">
+                    <h5>Quick Links</h5>
+                    <ul class="list-unstyled">
+                        <li><a href="#" class="text-light">Home</a></li>
+                        <li><a href="#" class="text-light">All Books</a></li>
+                        <li><a href="#" class="text-light">My Account</a></li>
+                        <li><a href="#" class="text-light">Contact Us</a></li>
+                    </ul>
+                </div>
+                <div class="col-md-3">
+                    <h5>Contact Info</h5>
+                    <ul class="list-unstyled">
+                        <li><i class="bi bi-geo-alt"></i> 123 Library Lane</li>
+                        <li><i class="bi bi-telephone"></i> (555) 123-4567</li>
+                        <li><i class="bi bi-envelope"></i> library@university.edu</li>
+                    </ul>
+                </div>
+            </div>
+            <hr class="my-4">
+            <div class="text-center">
+                <p>&copy; 2023 University Library. All rights reserved.</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
