@@ -3,36 +3,175 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Books</title>
+    <title>Books - LibraryMS</title>
 
     <!-- Bootstrap CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
-
     <!-- Bootstrap Icons -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css" rel="stylesheet">
 
     <style>
+        :root {
+            --primary-color: #3F51B5;
+            --secondary-color: #10b981;
+            --accent-color: #f59e0b;
+            --light-color: #f8fafc;
+            --dark-color: #1e293b;
+        }
+
         body {
             background-color: #f5f6fa;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
         }
 
-        .book-card img {
-            height: 220px;
-            object-fit: cover;
+        .navbar {
+            background: linear-gradient(135deg, var(--primary-color), #303f9f) !important;
+            padding: 1rem 0;
         }
 
-        .navbar-custom {
-            background-color: #2c3e50;
+        .navbar-brand {
+            font-size: 1.5rem;
+            font-weight: 700;
         }
 
-        .navbar-custom .nav-link, .navbar-custom .navbar-brand {
-            color: #fff !important;
+        .nav-link {
+            font-weight: 500;
+            padding: 0.5rem 1rem !important;
+            border-radius: 25px;
+            transition: all 0.3s ease;
         }
 
-        .card:hover {
-            transform: translateY(-4px);
+        .nav-link:hover, .nav-link.active {
+            background-color: rgba(255, 255, 255, 0.15);
+            transform: translateY(-1px);
+        }
+
+        .book-card {
+            border-radius: 16px;
             transition: 0.3s ease;
-            box-shadow: 0 4px 18px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: none;
+            background: white;
+            height: 100%;
+        }
+
+        .book-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .book-cover {
+            height: 250px;
+            object-fit: cover;
+            border-radius: 12px 12px 0 0;
+        }
+
+        .card-body {
+            padding: 1.5rem;
+        }
+
+        .status-badge {
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+
+        .btn-borrow {
+            background: linear-gradient(135deg, var(--secondary-color), #059669);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            border: none;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-borrow:hover {
+            background: linear-gradient(135deg, #059669, #047857);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 20px rgba(16, 185, 129, 0.4);
+            color: white;
+        }
+
+        .btn-details {
+            background: transparent;
+            color: var(--primary-color);
+            border: 2px solid var(--primary-color);
+            padding: 10px 20px;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: 0.3s ease;
+            width: 100%;
+        }
+
+        .btn-details:hover {
+            background: var(--primary-color);
+            color: white;
+            transform: translateY(-2px);
+        }
+
+        .search-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 3rem 0;
+            color: white;
+            margin-bottom: 3rem;
+        }
+
+        .filter-section {
+            background: white;
+            border-radius: 16px;
+            padding: 1.5rem;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+            margin-bottom: 2rem;
+        }
+
+        .stats-card {
+            background: white;
+            border-radius: 12px;
+            padding: 1.5rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+            transition: 0.3s ease;
+        }
+
+        .stats-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.12);
+        }
+
+        .section-title {
+            font-weight: 700;
+            color: var(--dark-color);
+            margin-bottom: 2rem;
+            position: relative;
+            text-align: center;
+        }
+
+        .section-title:after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border-radius: 2px;
+        }
+
+        .pagination .page-link {
+            border-radius: 10px;
+            margin: 0 3px;
+            border: none;
+            color: var(--dark-color);
+            font-weight: 600;
+        }
+
+        .pagination .page-item.active .page-link {
+            background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+            border: none;
         }
     </style>
 </head>
@@ -40,15 +179,16 @@
 <body>
 
 <!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg navbar-dark shadow-sm" style="background-color:#3F51B5;">
+<nav class="navbar navbar-expand-lg navbar-dark shadow">
     <div class="container">
         <!-- Brand -->
-        <a class="navbar-brand fw-bold" href="../index.html">LibraryMS</a>
+        <a class="navbar-brand fw-bold" href="../index.html">
+            <i class="bi bi-book-half me-2"></i>LibraryMS
+        </a>
 
         <!-- Mobile Toggle -->
         <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
-            data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
-            aria-label="Toggle navigation">
+            data-bs-target="#navbarNavDropdown">
             <span class="navbar-toggler-icon"></span>
         </button>
 
@@ -56,19 +196,25 @@
         <div class="collapse navbar-collapse" id="navbarNavDropdown">
             <ul class="navbar-nav me-auto mb-2 mb-lg-0">
                 <li class="nav-item">
-                    <a class="nav-link" aria-current="page" href="/Library/index.html">Home</a>
+                    <a class="nav-link" href="../index.html">Home</a>
                 </li>
                 <li class="nav-item">
                     <a class="nav-link active" href="books.html">Books</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link " href="contact.html">Contact</a>
+                    <a class="nav-link" href="contact.html">Contact</a>
                 </li>
             </ul>
 
             <!-- Search Box -->
             <form class="d-flex me-3" role="search">
-                <input class="form-control" type="search" placeholder="Search books..." aria-label="Search">
+                <div class="input-group">
+                    <input class="form-control rounded-pill" type="search" placeholder="Search books..." 
+                           id="searchInput" aria-label="Search">
+                    <button class="btn btn-light rounded-pill ms-2" type="submit">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
             </form>
 
             <!-- Auth Buttons -->
@@ -80,95 +226,275 @@
     </div>
 </nav>
 
+<!-- SEARCH SECTION -->
+<section class="search-section">
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-lg-6">
+                <h1 class="fw-bold display-5 mb-3">Discover Amazing Books</h1>
+                <p class="lead mb-4">Explore our vast collection of books across all genres. Find your next favorite read today!</p>
+            </div>
+            <div class="col-lg-6">
+                <div class="input-group input-group-lg">
+                    <input type="text" class="form-control rounded-pill" placeholder="Search by title, author, or genre...">
+                    <button class="btn btn-warning rounded-pill px-4" type="button">
+                        <i class="bi bi-search me-2"></i>Search
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
 
-<!-- PAGE HEADING -->
-<div class="container mt-4">
-    <h2 class="fw-semibold mb-4 text-center">Available Books</h2>
+<!-- MAIN CONTENT -->
+<div class="container">
+    <!-- Quick Stats -->
+    <div class="row g-4 mb-5">
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h3 class="text-primary mb-2">1,250+</h3>
+                <p class="text-muted mb-0">Total Books</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h3 class="text-success mb-2">980+</h3>
+                <p class="text-muted mb-0">Available Now</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h3 class="text-warning mb-2">45+</h3>
+                <p class="text-muted mb-0">New Arrivals</p>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="stats-card">
+                <h3 class="text-info mb-2">12+</h3>
+                <p class="text-muted mb-0">Categories</p>
+            </div>
+        </div>
+    </div>
 
-    <div class="row g-4">
+    <!-- Filters -->
+    <div class="filter-section">
+        <div class="row g-3 align-items-center">
+            <div class="col-md-3">
+                <select class="form-select" id="categoryFilter">
+                    <option value="">All Categories</option>
+                    <option value="fiction">Fiction</option>
+                    <option value="science">Science</option>
+                    <option value="technology">Technology</option>
+                    <option value="history">History</option>
+                    <option value="biography">Biography</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="availabilityFilter">
+                    <option value="">All Books</option>
+                    <option value="available">Available</option>
+                    <option value="unavailable">Unavailable</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <select class="form-select" id="sortFilter">
+                    <option value="title">Sort by Title</option>
+                    <option value="author">Sort by Author</option>
+                    <option value="newest">Newest First</option>
+                    <option value="popular">Most Popular</option>
+                </select>
+            </div>
+            <div class="col-md-3">
+                <button class="btn btn-outline-secondary w-100" id="resetFilters">
+                    <i class="bi bi-arrow-clockwise me-2"></i>Reset
+                </button>
+            </div>
+        </div>
+    </div>
 
-        <!--  Book 1 -->
-        <div class="col-md-4 col-sm-6">
+    <!-- Books Grid -->
+    <h3 class="section-title">Featured Books</h3>
+    
+    <div class="row g-4" id="booksGrid">
+        <!-- Book 1 -->
+        <div class="col-md-4 col-sm-6" data-category="fiction" data-availability="available">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=400" class="book-cover" alt="The Great Gatsby">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">The Great Gatsby</h5>
-                    <p class="card-text text-muted mb-1">Author: F. Scott Fitzgerald</p>
-                    <p class="text-success fw-semibold mb-2">Available</p>
-                    <a href="book_details.html" class="btn btn-primary w-100">View Details</a>
+                    <p class="card-text text-muted mb-2">F. Scott Fitzgerald</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-success">Available</span>
+                        <small class="text-muted">Fiction</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <a href="login.html" class="btn btn-borrow">Borrow Now</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Book 2 -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" data-category="fiction" data-availability="unavailable">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1532012197267-da84d127e765?w=400" class="book-cover" alt="To Kill a Mockingbird">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">To Kill a Mockingbird</h5>
-                    <p class="card-text text-muted mb-1">Author: Harper Lee</p>
-                    <p class="text-danger fw-semibold mb-2">Unavailable</p>
-                    <a href="#" class="btn btn-secondary w-100 disabled">Not Available</a>
+                    <p class="card-text text-muted mb-2">Harper Lee</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-danger">Unavailable</span>
+                        <small class="text-muted">Fiction</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <button class="btn btn-secondary" disabled>Not Available</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Book 3 -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" data-category="science" data-availability="available">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1531901599638-a89bb60971a3?w=400" class="book-cover" alt="A Brief History of Time">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold">1984</h5>
-                    <p class="card-text text-muted mb-1">Author: George Orwell</p>
-                    <p class="text-success fw-semibold mb-2">Available</p>
-                    <a href="#" class="btn btn-primary w-100">View Details</a>
+                    <h5 class="card-title fw-bold">A Brief History of Time</h5>
+                    <p class="card-text text-muted mb-2">Stephen Hawking</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-success">Available</span>
+                        <small class="text-muted">Science</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <a href="login.html" class="btn btn-borrow">Borrow Now</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Book 4 -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" data-category="technology" data-availability="available">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1621351183012-e2f9972dd9bf?w=400" class="book-cover" alt="Clean Code">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold">The Hobbit</h5>
-                    <p class="card-text text-muted mb-1">Author: J.R.R. Tolkien</p>
-                    <p class="text-success fw-semibold mb-2">Available</p>
-                    <a href="#" class="btn btn-primary w-100">View Details</a>
+                    <h5 class="card-title fw-bold">Clean Code</h5>
+                    <p class="card-text text-muted mb-2">Robert C. Martin</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-success">Available</span>
+                        <small class="text-muted">Technology</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <a href="login.html" class="btn btn-borrow">Borrow Now</a>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Book 5 -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" data-category="fiction" data-availability="unavailable">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1629992101753-56d196c8aabb?w=400" class="book-cover" alt="Pride & Prejudice">
                 <div class="card-body">
                     <h5 class="card-title fw-bold">Pride & Prejudice</h5>
-                    <p class="card-text text-muted mb-1">Author: Jane Austen</p>
-                    <p class="text-danger fw-semibold mb-2">Unavailable</p>
-                    <a href="#" class="btn btn-secondary w-100 disabled">Not Available</a>
+                    <p class="card-text text-muted mb-2">Jane Austen</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-danger">Unavailable</span>
+                        <small class="text-muted">Fiction</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <button class="btn btn-secondary" disabled>Not Available</button>
+                    </div>
                 </div>
             </div>
         </div>
 
         <!-- Book 6 -->
-        <div class="col-md-4 col-sm-6">
+        <div class="col-md-4 col-sm-6" data-category="biography" data-availability="available">
             <div class="card book-card shadow-sm">
-                <img src="/Library/img/books/seto dharti.png" class="card-img-top" alt="Book Cover">
+                <img src="https://images.unsplash.com/photo-1589829085413-56de8ae18c73?w=400" class="book-cover" alt="Steve Jobs">
                 <div class="card-body">
-                    <h5 class="card-title fw-bold">Atomic Habits</h5>
-                    <p class="card-text text-muted mb-1">Author: James Clear</p>
-                    <p class="text-success fw-semibold mb-2">Available</p>
-                    <a href="#" class="btn btn-primary w-100">View Details</a>
+                    <h5 class="card-title fw-bold">Steve Jobs</h5>
+                    <p class="card-text text-muted mb-2">Walter Isaacson</p>
+                    <div class="d-flex justify-content-between align-items-center mb-3">
+                        <span class="status-badge bg-success">Available</span>
+                        <small class="text-muted">Biography</small>
+                    </div>
+                    <div class="d-grid gap-2">
+                        <a href="book_details.html" class="btn btn-details">View Details</a>
+                        <a href="login.html" class="btn btn-borrow">Borrow Now</a>
+                    </div>
                 </div>
             </div>
         </div>
-
     </div>
+
+    <!-- Pagination -->
+    <nav class="mt-5">
+        <ul class="pagination justify-content-center">
+            <li class="page-item disabled">
+                <a class="page-link" href="#" tabindex="-1">Previous</a>
+            </li>
+            <li class="page-item active"><a class="page-link" href="#">1</a></li>
+            <li class="page-item"><a class="page-link" href="#">2</a></li>
+            <li class="page-item"><a class="page-link" href="#">3</a></li>
+            <li class="page-item">
+                <a class="page-link" href="#">Next</a>
+            </li>
+        </ul>
+    </nav>
 </div>
 
 <!-- Bootstrap JS -->
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+
+<script>
+    // Simple filter functionality
+    document.addEventListener('DOMContentLoaded', function() {
+        const categoryFilter = document.getElementById('categoryFilter');
+        const availabilityFilter = document.getElementById('availabilityFilter');
+        const searchInput = document.getElementById('searchInput');
+        const resetButton = document.getElementById('resetFilters');
+        const books = document.querySelectorAll('#booksGrid > div');
+
+        function filterBooks() {
+            const categoryValue = categoryFilter.value;
+            const availabilityValue = availabilityFilter.value;
+            const searchValue = searchInput.value.toLowerCase();
+
+            books.forEach(book => {
+                const bookCategory = book.getAttribute('data-category');
+                const bookAvailability = book.getAttribute('data-availability');
+                const bookTitle = book.querySelector('.card-title').textContent.toLowerCase();
+                const bookAuthor = book.querySelector('.card-text').textContent.toLowerCase();
+
+                const categoryMatch = !categoryValue || bookCategory === categoryValue;
+                const availabilityMatch = !availabilityValue || bookAvailability === availabilityValue;
+                const searchMatch = !searchValue || 
+                    bookTitle.includes(searchValue) || 
+                    bookAuthor.includes(searchValue);
+
+                if (categoryMatch && availabilityMatch && searchMatch) {
+                    book.style.display = 'block';
+                } else {
+                    book.style.display = 'none';
+                }
+            });
+        }
+
+        categoryFilter.addEventListener('change', filterBooks);
+        availabilityFilter.addEventListener('change', filterBooks);
+        searchInput.addEventListener('input', filterBooks);
+        
+        resetButton.addEventListener('click', function() {
+            categoryFilter.value = '';
+            availabilityFilter.value = '';
+            searchInput.value = '';
+            filterBooks();
+        });
+    });
+</script>
 </body>
 </html>
