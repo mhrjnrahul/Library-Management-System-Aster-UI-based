@@ -190,6 +190,30 @@
             box-shadow: 0 2px 4px rgba(0,0,0,0.05);
             margin-bottom: 15px;
         }
+        .stats-card {
+            text-align: center;
+            padding: 15px;
+            border-radius: 8px;
+            margin-bottom: 15px;
+            background: white;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+        }
+        
+        .stats-icon {
+            font-size: 1.5rem;
+            margin-bottom: 8px;
+        }
+        
+        .stats-number {
+            font-size: 1.4rem;
+            font-weight: 700;
+            margin: 3px 0;
+        }
+        
+        .stats-text {
+            color: #6c757d;
+            font-size: 0.8rem;
+        }
     </style>
 </head>
 
@@ -223,6 +247,37 @@
 
 <!-- MAIN CONTENT -->
 <div class=" main-content">
+    <h4 class="mb-3">MyBooks</h4>
+    <div class="row mb-4">
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="fas fa-book stats-icon text-primary"></i>
+                    <div class="stats-number">5</div>
+                    <div class="stats-text">Total Books Borrowed</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="fas fa-clock stats-icon text-warning"></i>
+                    <div class="stats-number">2</div>
+                    <div class="stats-text">Due This Week</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="fas fa-exclamation-circle stats-icon text-danger"></i>
+                    <div class="stats-number">1</div>
+                    <div class="stats-text">Overdue Books</div>
+                </div>
+            </div>
+            <div class="col-md-3">
+                <div class="stats-card">
+                    <i class="fas fa-check-circle stats-icon text-success"></i>
+                    <div class="stats-number">2</div>
+                    <div class="stats-text">On Time</div>
+                </div>
+            </div>
+        </div>
      <div class="filter-section">
             <div class="row g-2">
                 <div class="col-md-3">
