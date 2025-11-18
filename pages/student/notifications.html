@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -16,14 +17,14 @@
             --success-color: #10b981;
             --warning-color: #f59e0b;
         }
-        
+
         body {
             background-color: white;
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             margin: 0;
             padding: 0;
         }
-        
+
         .sidebar {
             width: 240px;
             min-height: 100vh;
@@ -67,21 +68,21 @@
         .sidebar a.text-danger:hover {
             background: #7f1d1d;
         }
-        
+
         .main-content {
             margin-left: 240px;
             padding: 30px;
         }
-        
+
         .notifications-container {
             max-width: 900px;
             margin: 0 auto;
         }
-        
+
         .page-header {
             margin-bottom: 30px;
         }
-        
+
         .notification-card {
             background-color: white;
             border-radius: 10px;
@@ -91,25 +92,25 @@
             transition: all 0.3s ease;
             border-left: 4px solid transparent;
         }
-        
+
         .notification-card:hover {
             transform: translateY(-2px);
             box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
         }
-        
+
         .notification-card.unread {
             border-left-color: var(--accent-color);
             background-color: #f0f7ff;
         }
-        
+
         .notification-card.important {
             border-left-color: var(--warning-color);
         }
-        
+
         .notification-card.urgent {
             border-left-color: var(--danger-color);
         }
-        
+
         .notification-header {
             display: flex;
             justify-content: space-between;
@@ -117,70 +118,70 @@
             padding: 20px;
             border-bottom: 1px solid #e2e8f0;
         }
-        
+
         .notification-body {
             padding: 20px;
         }
-        
+
         .notification-title {
             font-weight: 600;
             margin-bottom: 5px;
             color: var(--primary-color);
         }
-        
+
         .notification-message {
             color: #64748b;
             margin-bottom: 0;
         }
-        
+
         .notification-meta {
             display: flex;
             align-items: center;
             color: #94a3b8;
             font-size: 0.85rem;
         }
-        
+
         .notification-time {
             margin-right: 15px;
         }
-        
+
         .notification-category {
             padding: 3px 8px;
             border-radius: 4px;
             font-size: 0.75rem;
             font-weight: 600;
         }
-        
+
         .category-book {
             background-color: #dbeafe;
             color: var(--accent-color);
         }
-        
+
         .category-due {
             background-color: #fef3c7;
             color: var(--warning-color);
         }
-        
+
         .category-reservation {
             background-color: #dcfce7;
             color: var(--success-color);
         }
-        
+
         .category-event {
             background-color: #f3e8ff;
             color: #8b5cf6;
         }
-        
+
         .category-system {
             background-color: #e5e7eb;
             color: #6b7280;
         }
-        
+
         .notification-actions {
             display: flex;
             gap: 10px;
         }
-        
+
         .btn-mark-read {
             background: transparent;
             border: none;
@@ -188,30 +189,30 @@
             font-size: 0.85rem;
             cursor: pointer;
         }
-        
+
         .btn-mark-read:hover {
             text-decoration: underline;
         }
-        
+
         .empty-state {
             text-align: center;
             padding: 60px 20px;
             color: #64748b;
         }
-        
+
         .empty-state i {
             font-size: 3rem;
             margin-bottom: 15px;
             color: #cbd5e1;
         }
-        
+
         .filter-buttons {
             display: flex;
             gap: 10px;
             margin-bottom: 20px;
             flex-wrap: wrap;
         }
-        
+
         .filter-btn {
             background: white;
             border: 1px solid #e2e8f0;
@@ -221,13 +222,14 @@
             color: #64748b;
             transition: all 0.2s ease;
         }
-        
-        .filter-btn:hover, .filter-btn.active {
+
+        .filter-btn:hover,
+        .filter-btn.active {
             background: var(--accent-color);
             color: white;
             border-color: var(--accent-color);
         }
-        
+
         .user-profile {
             display: flex;
             align-items: center;
@@ -236,7 +238,7 @@
             border-radius: 10px;
             margin-bottom: 20px;
         }
-        
+
         .user-avatar {
             width: 50px;
             height: 50px;
@@ -245,19 +247,19 @@
             margin-right: 15px;
             border: 2px solid var(--accent-color);
         }
-        
+
         .user-info h5 {
             margin: 0;
             font-size: 1rem;
             font-weight: 600;
         }
-        
+
         .user-info p {
             margin: 0;
             font-size: 0.85rem;
             color: #cbd5e1;
         }
-        
+
         .badge-unread {
             background-color: var(--accent-color);
             color: white;
@@ -270,34 +272,35 @@
             font-size: 0.7rem;
             margin-left: 5px;
         }
-        
+
         @media (max-width: 768px) {
             .sidebar {
                 width: 100%;
                 min-height: auto;
                 position: relative;
             }
-            
+
             .main-content {
                 margin-left: 0;
             }
-            
+
             .notification-header {
                 flex-direction: column;
                 align-items: flex-start;
             }
-            
+
             .notification-meta {
                 margin-top: 10px;
             }
         }
     </style>
 </head>
+
 <body>
     <!-- Sidebar Navigation -->
     <div class="sidebar">
         <h4>Student Portal</h4>
-        
+
         <!-- User Profile Section -->
         <div class="user-profile">
             <img src="https://randomuser.me/api/portraits/women/68.jpg" class="user-avatar" alt="User Avatar">
@@ -309,11 +312,12 @@
 
         <a href="student_dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
         <a href="books.html"><i class="bi bi-book me-2"></i>Books</a>
-        <a href="my_books.html"><i class="bi bi-bookmark-check"></i> My Books</a>
+
         <a href="history.html"><i class="bi bi-clock-history me-2"></i> History</a>
         <a href="wishlist.html"><i class="bi bi-heart me-2"></i> Wishlist</a>
-        <a href="study_rooms.html"><i class="bi bi-people me-2"></i> Study Rooms</a>
-        <a href="notifications.html" class="active"><i class="bi bi-bell me-2"></i> Notifications <span class="badge-unread">5</span></a>
+        <a href="studyrooms.html"><i class="bi bi-people me-2"></i> Study Rooms</a>
+        <a href="notifications.html" class="active"><i class="bi bi-bell me-2"></i> Notifications <span
+                class="badge-unread">5</span></a>
         <a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a>
 
         <a href="../../index.html" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
@@ -321,7 +325,7 @@
 
     <!-- Main Content -->
     <div class="main-content">
-        
+
         <div class="notifications-container">
             <!-- Page Header -->
             <div class="page-header">
@@ -337,7 +341,7 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Filter Buttons -->
             <div class="filter-buttons">
                 <button class="filter-btn active" data-filter="all">All Notifications</button>
@@ -347,7 +351,7 @@
                 <button class="filter-btn" data-filter="reservation">Reservations</button>
                 <button class="filter-btn" data-filter="event">Events</button>
             </div>
-            
+
             <!-- Notifications List -->
             <div class="notifications-list">
                 <!-- Book Available Notification -->
@@ -355,7 +359,8 @@
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">Your Reserved Book is Available</h5>
-                            <p class="notification-message">"Clean Code: A Handbook of Agile Software Craftsmanship" is now available for pickup at the library.</p>
+                            <p class="notification-message">"Clean Code: A Handbook of Agile Software Craftsmanship" is
+                                now available for pickup at the library.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">2 hours ago</span>
@@ -374,13 +379,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Due Date Reminder -->
                 <div class="notification-card unread important" data-category="due">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">Book Due Soon</h5>
-                            <p class="notification-message">"The Pragmatic Programmer: Your Journey to Mastery" is due in 2 days.</p>
+                            <p class="notification-message">"The Pragmatic Programmer: Your Journey to Mastery" is due
+                                in 2 days.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">5 hours ago</span>
@@ -399,13 +405,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- New Book Arrival -->
                 <div class="notification-card" data-category="book">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">New Books in Your Interest Area</h5>
-                            <p class="notification-message">5 new books on Computer Science have been added to the library collection.</p>
+                            <p class="notification-message">5 new books on Computer Science have been added to the
+                                library collection.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">1 day ago</span>
@@ -415,7 +422,8 @@
                     <div class="notification-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <small class="text-muted">Check out the latest additions to our Computer Science section.</small>
+                                <small class="text-muted">Check out the latest additions to our Computer Science
+                                    section.</small>
                             </div>
                             <div class="notification-actions">
                                 <button class="btn btn-sm btn-outline-primary">Browse Books</button>
@@ -424,13 +432,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Library Event -->
                 <div class="notification-card" data-category="event">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">Upcoming Library Workshop</h5>
-                            <p class="notification-message">Join us for "Research Skills for Computer Science Students" this Friday at 3 PM.</p>
+                            <p class="notification-message">Join us for "Research Skills for Computer Science Students"
+                                this Friday at 3 PM.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">2 days ago</span>
@@ -449,13 +458,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Overdue Book -->
                 <div class="notification-card unread urgent" data-category="due">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">Overdue Book</h5>
-                            <p class="notification-message">"Design Patterns: Elements of Reusable Object-Oriented Software" is overdue by 3 days.</p>
+                            <p class="notification-message">"Design Patterns: Elements of Reusable Object-Oriented
+                                Software" is overdue by 3 days.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">3 days ago</span>
@@ -465,7 +475,8 @@
                     <div class="notification-body">
                         <div class="d-flex justify-content-between align-items-center">
                             <div>
-                                <small class="text-muted">Late fee: $1.50. Please return the book as soon as possible.</small>
+                                <small class="text-muted">Late fee: $1.50. Please return the book as soon as
+                                    possible.</small>
                             </div>
                             <div class="notification-actions">
                                 <button class="btn btn-sm btn-outline-primary">Pay Fine</button>
@@ -474,13 +485,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- Book Return Confirmation -->
                 <div class="notification-card" data-category="book">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">Book Returned Successfully</h5>
-                            <p class="notification-message">"Introduction to Algorithms" has been successfully returned.</p>
+                            <p class="notification-message">"Introduction to Algorithms" has been successfully returned.
+                            </p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">4 days ago</span>
@@ -499,13 +511,14 @@
                         </div>
                     </div>
                 </div>
-                
+
                 <!-- System Maintenance -->
                 <div class="notification-card" data-category="system">
                     <div class="notification-header">
                         <div>
                             <h5 class="notification-title">System Maintenance Notice</h5>
-                            <p class="notification-message">The library system will be unavailable this Sunday from 2 AM to 6 AM for maintenance.</p>
+                            <p class="notification-message">The library system will be unavailable this Sunday from 2 AM
+                                to 6 AM for maintenance.</p>
                         </div>
                         <div class="notification-meta">
                             <span class="notification-time">1 week ago</span>
@@ -524,14 +537,14 @@
                     </div>
                 </div>
             </div>
-            
+
             <!-- Empty State (hidden by default) -->
             <div class="empty-state d-none" id="emptyState">
                 <i class="bi bi-bell-slash"></i>
                 <h4>No notifications</h4>
                 <p>You're all caught up! Check back later for new notifications.</p>
             </div>
-            
+
             <!-- Load More Button -->
             <div class="text-center mt-4">
                 <button class="btn btn-outline-secondary" id="loadMore">
@@ -543,11 +556,11 @@
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
     <script>
-        document.addEventListener('DOMContentLoaded', function() {
+        document.addEventListener('DOMContentLoaded', function () {
             // Mark as read functionality
             const markReadButtons = document.querySelectorAll('.btn-mark-read');
             markReadButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     const notificationCard = this.closest('.notification-card');
                     notificationCard.classList.remove('unread');
                     this.textContent = 'Marked as read';
@@ -555,10 +568,10 @@
                     updateUnreadCount();
                 });
             });
-            
+
             // Mark all as read
             const markAllReadBtn = document.getElementById('markAllRead');
-            markAllReadBtn.addEventListener('click', function() {
+            markAllReadBtn.addEventListener('click', function () {
                 const unreadNotifications = document.querySelectorAll('.notification-card.unread');
                 unreadNotifications.forEach(card => {
                     card.classList.remove('unread');
@@ -570,33 +583,33 @@
                 });
                 updateUnreadCount();
             });
-            
+
             // Filter functionality
             const filterButtons = document.querySelectorAll('.filter-btn');
             filterButtons.forEach(button => {
-                button.addEventListener('click', function() {
+                button.addEventListener('click', function () {
                     // Remove active class from all buttons
                     filterButtons.forEach(btn => btn.classList.remove('active'));
                     // Add active class to clicked button
                     this.classList.add('active');
-                    
+
                     const filter = this.getAttribute('data-filter');
                     filterNotifications(filter);
                 });
             });
-            
+
             // Load more notifications
             const loadMoreBtn = document.getElementById('loadMore');
-            loadMoreBtn.addEventListener('click', function() {
+            loadMoreBtn.addEventListener('click', function () {
                 // In a real app, this would fetch more notifications from the server
                 alert('Loading more notifications...');
             });
-            
+
             // Update unread count in sidebar
             function updateUnreadCount() {
                 const unreadCount = document.querySelectorAll('.notification-card.unread').length;
                 const badge = document.querySelector('.badge-unread');
-                
+
                 if (unreadCount > 0) {
                     badge.textContent = unreadCount;
                     badge.style.display = 'inline-flex';
@@ -604,17 +617,17 @@
                     badge.style.display = 'none';
                 }
             }
-            
+
             // Filter notifications based on category
             function filterNotifications(filter) {
                 const notifications = document.querySelectorAll('.notification-card');
                 const emptyState = document.getElementById('emptyState');
                 let visibleCount = 0;
-                
+
                 notifications.forEach(notification => {
                     const category = notification.getAttribute('data-category');
-                    
-                    if (filter === 'all' || 
+
+                    if (filter === 'all' ||
                         (filter === 'unread' && notification.classList.contains('unread')) ||
                         filter === category) {
                         notification.style.display = 'block';
@@ -623,7 +636,7 @@
                         notification.style.display = 'none';
                     }
                 });
-                
+
                 // Show empty state if no notifications are visible
                 if (visibleCount === 0) {
                     emptyState.classList.remove('d-none');
@@ -631,10 +644,11 @@
                     emptyState.classList.add('d-none');
                 }
             }
-            
+
             // Initialize unread count
             updateUnreadCount();
         });
     </script>
 </body>
+
 </html>
