@@ -1,24 +1,23 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Wishlist</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
 
-  <!-- BOOTSTRAP -->
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
 
-  <style>
-    :root{
-       --accent-color: #3b82f6;
-    }
-    body { background: #f8fafc; }
+    <style>
+        :root{
+             --accent-color: #3b82f6;
+        }
+        body { background:#f1f5f9; font-family:'Segoe UI'; }
 
-    .sidebar {
+        .sidebar {
             width: 240px;
             min-height: 100vh;
-            background: #1e293b; /* Slate-800 */
+            background: #1e293b;
             color: white;
             position: fixed;
             left: 0;
@@ -59,11 +58,14 @@
             background: #7f1d1d;
         }
 
-    .content-area {
-      margin-left: 250px;
-      padding: 30px;
-    }
-    .user-profile {
+        .main-content { margin-left:240px; padding:35px; }
+
+        .dashboard-card {
+            background:white; border-radius:15px; padding:20px;
+            box-shadow:0px 4px 12px rgba(0,0,0,0.07);
+        }
+        
+        .user-profile {
             display: flex;
             align-items: center;
             padding: 15px;
@@ -92,18 +94,8 @@
             font-size: 0.85rem;
             color: #cbd5e1;
         }
-
-    .book-card {
-      border-radius: 12px;
-      background: white;
-      box-shadow: 0 2px 8px rgba(0,0,0,0.05);
-      padding: 20px;
-      transition: 0.2s;
-    }
-    .book-card:hover {
-      transform: translateY(-3px);
-    }
-    .badge-unread {
+        
+        .badge-unread {
             background-color: var(--accent-color);
             color: white;
             border-radius: 50%;
@@ -115,13 +107,55 @@
             font-size: 0.7rem;
             margin-left: 5px;
         }
-  </style>
+        
+        .header {
+            background-color: white;
+            border-radius: 10px;
+            padding: 15px 25px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            margin-bottom: 25px;
+        }
+        
+        .book-cover {
+            width: 70px;
+            height: 90px;
+            object-fit: cover;
+            border-radius: 5px;
+        }
+        
+        .wishlist-item {
+            transition: all 0.2s;
+            border-radius: 10px;
+            padding: 15px;
+        }
+        
+        .wishlist-item:hover {
+            background-color: #f8fafc;
+        }
+        
+        .availability-badge {
+            padding: 5px 10px;
+            border-radius: 6px;
+            font-size: 0.8rem;
+        }
+        
+        @media (max-width: 768px) {
+            .sidebar {
+                width: 100%;
+                height: auto;
+                position: relative;
+            }
+            .main-content {
+                margin-left: 0;
+                padding: 20px;
+            }
+        }
+    </style>
 </head>
 
 <body>
 
-  <!-- SIDEBAR -->
-   <div class="sidebar">
+    <div class="sidebar">
         <h4>Student Portal</h4>
         
         <!-- User Profile Section -->
@@ -134,10 +168,9 @@
         </div>
 
         <a href="student_dashboard.html"><i class="bi bi-speedometer2 me-2"></i> Dashboard</a>
-        <a href="books.html" class="active"><i class="bi bi-book me-2"></i>Books</a>
-        <a href="my_books.html"><i class="bi bi-bookmark-check"></i> My Books</a>
+        <a href="books.html"><i class="bi bi-book me-2"></i>Books</a>
         <a href="history.html"><i class="bi bi-clock-history me-2"></i> History</a>
-        <a href="wishlist.html"><i class="bi bi-heart me-2"></i> Wishlist</a>
+        <a href="wishlist.html" class="active"><i class="bi bi-heart me-2"></i> Wishlist</a>
         <a href="study_rooms.html"><i class="bi bi-people me-2"></i> Study Rooms</a>
         <a href="notifications.html"><i class="bi bi-bell me-2"></i> Notifications <span class="badge-unread">5</span></a>
         <a href="settings.html"><i class="bi bi-gear me-2"></i> Settings</a>
@@ -145,38 +178,179 @@
         <a href="../../index.html" class="mt-3 text-danger"><i class="bi bi-box-arrow-right me-2"></i> Logout</a>
     </div>
 
-  <!-- CONTENT -->
-  <div class="content-area">
-    <h2 class="fw-bold mb-4">My Wishlist</h2>
 
-    <div class="row g-4">
-
-      <div class="col-md-4">
-        <div class="book-card">
-          <h5 class="fw-bold">Atomic Habits</h5>
-          <p class="text-muted small">James Clear</p>
-          <button class="btn btn-primary w-100">Request Book</button>
+    <div class="main-content">
+        <!-- Header -->
+        <div class="header d-flex justify-content-between align-items-center">
+            <div>
+                <h3 class="mb-0">My Wishlist</h3>
+                <p class="text-muted mb-0">Books you want to read</p>
+            </div>
+            <div class="d-flex align-items-center">
+                <span class="badge bg-primary fs-6">8 items</span>
+            </div>
         </div>
-      </div>
 
-      <div class="col-md-4">
-        <div class="book-card">
-          <h5 class="fw-bold">Clean Code</h5>
-          <p class="text-muted small">Robert C. Martin</p>
-          <button class="btn btn-primary w-100">Request Book</button>
+        <!-- Wishlist Content -->
+        <div class="dashboard-card">
+            <div class="d-flex justify-content-between align-items-center mb-4">
+                <h5 class="fw-semibold mb-0">Saved Books</h5>
+                <div class="input-group" style="width: 250px;">
+                    <input type="text" class="form-control" placeholder="Search wishlist...">
+                    <button class="btn btn-outline-secondary" type="button">
+                        <i class="bi bi-search"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Wishlist Items -->
+            <div class="wishlist-items">
+                <!-- Item 1 -->
+                <div class="wishlist-item border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img src="https://covers.openlibrary.org/b/id/8259447-M.jpg" class="book-cover" alt="Book Cover">
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-1">The Pragmatic Programmer</h6>
+                            <p class="text-muted mb-1">David Thomas, Andrew Hunt</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge availability-badge bg-success me-2">Available</span>
+                                <small class="text-muted">Computer Science</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="bi bi-cart-plus"></i> Borrow
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 2 -->
+                <div class="wishlist-item border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img src="https://covers.openlibrary.org/b/id/10412649-M.jpg" class="book-cover" alt="Book Cover">
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-1">Design Patterns</h6>
+                            <p class="text-muted mb-1">Erich Gamma, Richard Helm</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge availability-badge bg-success me-2">Available</span>
+                                <small class="text-muted">Computer Science</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="bi bi-cart-plus"></i> Borrow
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 3 -->
+                <div class="wishlist-item border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img src="https://covers.openlibrary.org/b/id/12820380-M.jpg" class="book-cover" alt="Book Cover">
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-1">Atomic Habits</h6>
+                            <p class="text-muted mb-1">James Clear</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge availability-badge bg-warning me-2">Checked Out</span>
+                                <small class="text-muted">Self-Help</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-secondary">
+                                    <i class="bi bi-clock"></i> Reserve
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 4 -->
+                <div class="wishlist-item border-bottom">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img src="https://covers.openlibrary.org/b/id/12820381-M.jpg" class="book-cover" alt="Book Cover">
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-1">Educated: A Memoir</h6>
+                            <p class="text-muted mb-1">Tara Westover</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge availability-badge bg-success me-2">Available</span>
+                                <small class="text-muted">Memoir</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-primary">
+                                    <i class="bi bi-cart-plus"></i> Borrow
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Item 5 -->
+                <div class="wishlist-item">
+                    <div class="row align-items-center">
+                        <div class="col-auto">
+                            <img src="https://covers.openlibrary.org/b/id/8226465-M.jpg" class="book-cover" alt="Book Cover">
+                        </div>
+                        <div class="col">
+                            <h6 class="mb-1">Sapiens: A Brief History</h6>
+                            <p class="text-muted mb-1">Yuval Noah Harari</p>
+                            <div class="d-flex align-items-center">
+                                <span class="badge availability-badge bg-danger me-2">Unavailable</span>
+                                <small class="text-muted">History</small>
+                            </div>
+                        </div>
+                        <div class="col-auto">
+                            <div class="d-flex gap-2">
+                                <button class="btn btn-sm btn-outline-secondary" disabled>
+                                    <i class="bi bi-x-circle"></i> Unavailable
+                                </button>
+                                <button class="btn btn-sm btn-outline-danger">
+                                    <i class="bi bi-heart-fill"></i>
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Empty State (Hidden by default) -->
+            <div class="text-center py-5 d-none">
+                <i class="bi bi-heart display-1 text-muted"></i>
+                <h5 class="mt-3 text-muted">Your wishlist is empty</h5>
+                <p class="text-muted">Start adding books you want to read!</p>
+                <a href="books.html" class="btn btn-primary mt-2">Browse Books</a>
+            </div>
         </div>
-      </div>
-
-      <div class="col-md-4">
-        <div class="book-card">
-          <h5 class="fw-bold">The Pragmatic Programmer</h5>
-          <p class="text-muted small">Andrew Hunt</p>
-          <button class="btn btn-primary w-100">Request Book</button>
-        </div>
-      </div>
-
     </div>
-  </div>
 
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>
