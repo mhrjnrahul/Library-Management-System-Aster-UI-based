@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Issue Book</title>
+    <title>Library Management System - Issue Book</title>
 
     <!-- BOOTSTRAP CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
@@ -13,75 +13,537 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
 
     <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #1abc9c;
+            --light-bg: #f8f9fa;
+        }
+
         body {
-            background: #f0f2f5;
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
             min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 20px 0;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .header h1 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
             display: flex;
             align-items: center;
             justify-content: center;
+            color: white;
+            font-weight: bold;
         }
 
-        .issue-book-card {
-            max-width: 420px;
-            width: 100%;
-            border-radius: 15px;
+        /* Main Content Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+        }
+
+        .form-section-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info-section, .book-info-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
         }
 
         .note {
-            font-size: 70%;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        /* Recently Issued Books */
+        .issued-books-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .issued-book-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .issued-book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-cover {
+            width: 50px;
+            height: 70px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, #3498db, #2c3e50);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .book-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .user-info-small {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        .due-date {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .due-date.warning {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .due-date.normal {
+            color: #27ae60;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
         }
     </style>
 </head>
 
 <body>
+    
 
-    <div class="card shadow issue-book-card p-4">
-        <h3 class="text-center fw-bold">Issue Book </h3>
+    <!-- Main Content -->
+    <div class=" container main-content">
+        <!-- Issue Book Form -->
+        <div class="form-container">
+            <h4 class="mb-4"><i class="bi bi-journal-plus"></i> Issue Book</h4>
+            
+            <form id="issueBookForm">
+                <!-- User Information Section -->
+                <h5 class="form-section-title"><i class="bi bi-person"></i> User Information</h5>
+                <div class="user-info-section">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="userid" class="form-label fw-semibold">User ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="userid" placeholder="Enter User ID">
+                                <button class="btn btn-outline-secondary" type="button" id="searchUserBtn">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Status</label>
+                            <div>
+                                <span class="badge bg-success status-badge" id="userStatus">Active</span>
+                            </div>
+                        </div>
+                    </div>
 
-        <form>
-            <div class="mb-3">
-                <label for="userid" class="form-label fw-semibold">User ID</label>
-                <input type="text" class="form-control" id="userid" placeholder="User Id">
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-semibold">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username" readonly>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Books Issued</label>
+                                <div class="fw-bold text-primary">2/5</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Overdue Books</label>
+                                <div class="fw-bold text-success">0</div>
+                            </div>
+                        </div>
+                       
+                    </div>
+                </div>
+
+                <!-- Book Information Section -->
+                <h5 class="form-section-title"><i class="bi bi-book"></i> Book Information</h5>
+                <div class="book-info-section">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="bookid" class="form-label fw-semibold">Book ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="bookid" placeholder="Enter Book ID">
+                                <button class="btn btn-outline-secondary" type="button" id="searchBookBtn">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Availability</label>
+                            <div>
+                                <span class="badge bg-success status-badge" id="bookStatus">Available</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="book-title" class="form-label fw-semibold">Book Title</label>
+                        <input type="text" class="form-control" id="book-title" placeholder="Book title" readonly>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-author" class="form-label fw-semibold">Author</label>
+                                <input type="text" class="form-control" id="book-author" placeholder="Author" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-isbn" class="form-label fw-semibold">ISBN</label>
+                                <input type="text" class="form-control" id="book-isbn" placeholder="ISBN" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-category" class="form-label fw-semibold">Category</label>
+                                <input type="text" class="form-control" id="book-category" placeholder="Category" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-publisher" class="form-label fw-semibold">Publisher</label>
+                                <input type="text" class="form-control" id="book-publisher" placeholder="Publisher" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Issue Details Section -->
+                <h5 class="form-section-title"><i class="bi bi-calendar"></i> Issue Details</h5>
+                <div class="mb-4">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="issue-date" class="form-label fw-semibold">Issue Date</label>
+                                <input type="date" class="form-control" id="issue-date">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="due-date" class="form-label fw-semibold">Due Date</label>
+                                <input type="date" class="form-control" id="due-date">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="note">
+                        <i class="bi bi-info-circle me-1"></i> Standard lending period is 14 days. Extensions may be granted upon request.
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-primary w-50 py-2 fw-semibold">
+                        <i class="bi bi-check-lg me-2"></i>Issue Book
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary w-50 py-2 fw-semibold" id="resetBtn">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Reset Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Recently Issued Books -->
+        <div class="issued-books-container">
+            <div class="section-header">
+                <h4><i class="bi bi-clock-history"></i> Recently Issued Books</h4>
             </div>
-
-            <div class="mb-3">
-                <label for="username" class="form-label fw-semibold">Username</label>
-                <input type="text" class="form-control" id="username" placeholder="Username">
+            
+            <div class="issued-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">The Great Gatsby</div>
+                    <div class="book-meta">
+                        <span class="book-author">F. Scott Fitzgerald</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Issued to: Sarah Johnson (ID: U1024)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> Due: 2023-11-15
+                    </div>
+                </div>
             </div>
-
-
-            <div class="mb-3">
-                <label for="bookid" class="form-label fw-semibold">Book ID</label>
-                <input type="text" class="form-control" id="bookid" placeholder="Book Id">
+            
+            <div class="issued-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">To Kill a Mockingbird</div>
+                    <div class="book-meta">
+                        <span class="book-author">Harper Lee</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Issued to: Michael Brown (ID: U1037)</div>
+                    <div class="due-date warning">
+                        <i class="bi bi-exclamation-triangle"></i> Due: 2023-11-10 (Overdue)
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="book-title" class="form-label fw-semibold">Book Title</label>
-                <input type="text" class="form-control" id="book-title" placeholder="Book title">
+            
+            <div class="issued-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">1984</div>
+                    <div class="book-meta">
+                        <span class="book-author">George Orwell</span>
+                        <span class="book-category">Dystopian Fiction</span>
+                    </div>
+                    <div class="user-info-small">Issued to: Emily Davis (ID: U1015)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> Due: 2023-11-18
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="issue-date" class="form-label fw-semibold">Issue Date</label>
-                <input type="date" class="form-control" id="issue-date">
+            
+            <div class="issued-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">Pride and Prejudice</div>
+                    <div class="book-meta">
+                        <span class="book-author">Jane Austen</span>
+                        <span class="book-category">Romance</span>
+                    </div>
+                    <div class="user-info-small">Issued to: Robert Wilson (ID: U1042)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> Due: 2023-11-20
+                    </div>
+                </div>
             </div>
-
-            <div class="mb-3">
-                <label for="due-date" class="form-label fw-semibold">Due Date</label>
-                <input type="date" class="form-control" id="due-date">
+            
+            <div class="issued-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">The Catcher in the Rye</div>
+                    <div class="book-meta">
+                        <span class="book-author">J.D. Salinger</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Issued to: Jennifer Lee (ID: U1031)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> Due: 2023-11-22
+                    </div>
+                </div>
             </div>
+        </div>
+    </div>
 
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
 
-
-
-            <!-- Login Button -->
-            <button class="btn btn-primary w-100 py-2 fw-semibold">Issue Book</button>
-
-
-
-
-            <!-- BOOTSTRAP JS -->
-            <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
-
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default issue date
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('issue-date').value = formattedDate;
+            
+            // Set due date to 14 days from today
+            const dueDate = new Date();
+            dueDate.setDate(today.getDate() + 14);
+            const formattedDueDate = dueDate.toISOString().split('T')[0];
+            document.getElementById('due-date').value = formattedDueDate;
+            
+            // Search user button functionality
+            document.getElementById('searchUserBtn').addEventListener('click', function() {
+                const userId = document.getElementById('userid').value;
+                if (userId) {
+                    // In a real application, this would fetch user data from the server
+                    // For demo purposes, we'll simulate a response
+                    document.getElementById('username').value = "John Smith";
+                    document.getElementById('userStatus').textContent = "Active";
+                    document.getElementById('userStatus').className = "badge bg-success status-badge";
+                } else {
+                    alert("Please enter a User ID");
+                }
+            });
+            
+            // Search book button functionality
+            document.getElementById('searchBookBtn').addEventListener('click', function() {
+                const bookId = document.getElementById('bookid').value;
+                if (bookId) {
+                    // In a real application, this would fetch book data from the server
+                    // For demo purposes, we'll simulate a response
+                    document.getElementById('book-title').value = "Introduction to Computer Science";
+                    document.getElementById('book-author').value = "Jane Smith";
+                    document.getElementById('book-isbn').value = "978-0123456789";
+                    document.getElementById('book-category').value = "Computer Science";
+                    document.getElementById('book-publisher').value = "Tech Publications";
+                    document.getElementById('bookStatus').textContent = "Available";
+                    document.getElementById('bookStatus').className = "badge bg-success status-badge";
+                } else {
+                    alert("Please enter a Book ID");
+                }
+            });
+            
+            // Reset form functionality
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                document.getElementById('issueBookForm').reset();
+                
+                // Reset status badges
+                document.getElementById('userStatus').textContent = "Active";
+                document.getElementById('userStatus').className = "badge bg-success status-badge";
+                document.getElementById('bookStatus').textContent = "Available";
+                document.getElementById('bookStatus').className = "badge bg-success status-badge";
+                
+                // Reset dates to default
+                document.getElementById('issue-date').value = formattedDate;
+                document.getElementById('due-date').value = formattedDueDate;
+            });
+            
+            // Form submission
+            document.getElementById('issueBookForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userId = document.getElementById('userid').value;
+                const bookId = document.getElementById('bookid').value;
+                
+                if (!userId || !bookId) {
+                    alert("Please search for both a user and a book before issuing");
+                    return;
+                }
+                
+                // In a real application, this would submit the data to the server
+                alert("Book issued successfully!");
+                document.getElementById('issueBookForm').reset();
+                
+                // Reset dates to default
+                document.getElementById('issue-date').value = formattedDate;
+                document.getElementById('due-date').value = formattedDueDate;
+            });
+        });
+    </script>
 </body>
 
 </html>
