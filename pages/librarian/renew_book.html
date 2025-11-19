@@ -1,0 +1,658 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Library Management System - Renew Book</title>
+
+    <!-- BOOTSTRAP CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- BOOTSTRAP ICONS -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css">
+
+    <style>
+        :root {
+            --primary-color: #3498db;
+            --secondary-color: #2c3e50;
+            --accent-color: #1abc9c;
+            --warning-color: #f39c12;
+            --light-bg: #f8f9fa;
+        }
+
+        body {
+            background-color: #f5f7fa;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            min-height: 100vh;
+            padding: 20px;
+        }
+
+        .header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0 20px 0;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #dee2e6;
+        }
+
+        .header h1 {
+            color: var(--secondary-color);
+            font-weight: 700;
+            margin: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary-color);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .navigation {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .nav-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+
+        .nav-btn.primary {
+            background-color: var(--primary-color);
+            color: white;
+        }
+
+        .nav-btn.secondary {
+            background-color: white;
+            color: var(--secondary-color);
+            border: 1px solid #dee2e6;
+        }
+
+        .nav-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+
+        /* Main Content Layout */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+        }
+
+        @media (max-width: 992px) {
+            .main-content {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Form Styles */
+        .form-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+        }
+
+        .form-section-title {
+            color: var(--secondary-color);
+            font-weight: 600;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-info-section, .book-info-section, .renewal-info-section {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 20px;
+        }
+
+        .user-info-section {
+            border-left: 4px solid var(--primary-color);
+        }
+
+        .book-info-section {
+            border-left: 4px solid var(--accent-color);
+        }
+
+        .renewal-info-section {
+            border-left: 4px solid var(--warning-color);
+        }
+
+        .action-buttons {
+            display: flex;
+            gap: 15px;
+            margin-top: 25px;
+        }
+
+        .btn-primary {
+            background-color: var(--primary-color);
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background-color: #2980b9;
+        }
+
+        .btn-warning {
+            background-color: var(--warning-color);
+            border: none;
+            color: white;
+        }
+
+        .btn-warning:hover {
+            background-color: #e67e22;
+        }
+
+        .status-badge {
+            font-size: 0.75rem;
+            padding: 4px 8px;
+        }
+
+        .note {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-top: 5px;
+        }
+
+        .fine-amount {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #e74c3c;
+            margin: 10px 0;
+        }
+
+        /* Recently Renewed Books */
+        .renewed-books-container {
+            background: white;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+            padding: 25px;
+            height: fit-content;
+        }
+
+        .renewed-book-item {
+            display: flex;
+            align-items: center;
+            padding: 15px 0;
+            border-bottom: 1px solid #f1f1f1;
+        }
+
+        .renewed-book-item:last-child {
+            border-bottom: none;
+        }
+
+        .book-cover {
+            width: 50px;
+            height: 70px;
+            border-radius: 5px;
+            background: linear-gradient(135deg, var(--warning-color), #e67e22);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-right: 15px;
+            color: white;
+            font-size: 20px;
+        }
+
+        .book-details {
+            flex: 1;
+        }
+
+        .book-title {
+            font-weight: 600;
+            margin-bottom: 5px;
+            color: var(--secondary-color);
+        }
+
+        .book-meta {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-size: 0.85rem;
+            color: #7f8c8d;
+            margin-bottom: 5px;
+        }
+
+        .user-info-small {
+            font-size: 0.85rem;
+            color: #7f8c8d;
+        }
+
+        .due-date {
+            font-size: 0.85rem;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+            margin-top: 5px;
+        }
+
+        .due-date.warning {
+            color: #e74c3c;
+            font-weight: 600;
+        }
+
+        .due-date.normal {
+            color: #27ae60;
+        }
+
+        .section-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .view-all {
+            font-size: 0.9rem;
+            color: var(--primary-color);
+            text-decoration: none;
+        }
+
+        .view-all:hover {
+            text-decoration: underline;
+        }
+
+        .renewal-count {
+            display: inline-block;
+            background-color: var(--warning-color);
+            color: white;
+            border-radius: 50%;
+            width: 20px;
+            height: 20px;
+            text-align: center;
+            font-size: 0.7rem;
+            line-height: 20px;
+            margin-left: 5px;
+        }
+
+        .renewal-info {
+            background-color: #fff9e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 10px;
+            border-left: 3px solid var(--warning-color);
+        }
+    </style>
+</head>
+
+<body>
+    
+
+    <!-- Main Content -->
+    <div class=" container main-content">
+        <!-- Renew Book Form -->
+        <div class="form-container">
+            <h4 class="mb-4"><i class="bi bi-arrow-clockwise"></i> Renew Book</h4>
+            
+            <form id="renewBookForm">
+                <!-- User Information Section -->
+                <h5 class="form-section-title"><i class="bi bi-person"></i> User Information</h5>
+                <div class="user-info-section">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="userid" class="form-label fw-semibold">User ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="userid" placeholder="Enter User ID">
+                                <button class="btn btn-outline-secondary" type="button" id="searchUserBtn">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Status</label>
+                            <div>
+                                <span class="badge bg-success status-badge" id="userStatus">Active</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="username" class="form-label fw-semibold">Username</label>
+                        <input type="text" class="form-control" id="username" placeholder="Username" readonly>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Books Issued</label>
+                                <div class="fw-bold text-primary">3/5</div>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Overdue Books</label>
+                                <div class="fw-bold text-danger">1</div>
+                            </div>
+                        </div>
+                      
+                    </div>
+                </div>
+
+                <!-- Book Information Section -->
+                <h5 class="form-section-title"><i class="bi bi-book"></i> Book Information</h5>
+                <div class="book-info-section">
+                    <div class="row mb-3">
+                        <div class="col-md-8">
+                            <label for="bookid" class="form-label fw-semibold">Book ID</label>
+                            <div class="input-group">
+                                <input type="text" class="form-control" id="bookid" placeholder="Enter Book ID">
+                                <button class="btn btn-outline-secondary" type="button" id="searchBookBtn">
+                                    <i class="bi bi-search"></i> Search
+                                </button>
+                            </div>
+                        </div>
+                        <div class="col-md-4">
+                            <label class="form-label fw-semibold">Status</label>
+                            <div>
+                                <span class="badge bg-warning status-badge" id="bookStatus">Issued</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="mb-3">
+                        <label for="book-title" class="form-label fw-semibold">Book Title</label>
+                        <input type="text" class="form-control" id="book-title" placeholder="Book title" readonly>
+                    </div>
+
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-author" class="form-label fw-semibold">Author</label>
+                                <input type="text" class="form-control" id="book-author" placeholder="Author" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="book-isbn" class="form-label fw-semibold">ISBN</label>
+                                <input type="text" class="form-control" id="book-isbn" placeholder="ISBN" readonly>
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Current Due Date</label>
+                                <input type="text" class="form-control" id="current-due-date" value="2023-11-15" readonly>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label class="form-label fw-semibold">Renewals Used</label>
+                                <input type="text" class="form-control" id="renewals-used" value="1/2" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Renewal Information Section -->
+                <h5 class="form-section-title"><i class="bi bi-info-circle"></i> Renewal Information</h5>
+                <div class="renewal-info-section">
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="renewal-date" class="form-label fw-semibold">Renewal Date</label>
+                                <input type="date" class="form-control" id="renewal-date">
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <div class="mb-3">
+                                <label for="new-due-date" class="form-label fw-semibold">New Due Date</label>
+                                <input type="date" class="form-control" id="new-due-date">
+                            </div>
+                        </div>
+                    </div>
+                    
+                    <div class="renewal-info">
+                        <div class="fw-semibold">Renewal Policy</div>
+                        <div class="note">
+                            <ul class="mb-0 mt-2">
+                                <li>Books can be renewed up to 2 times</li>
+                                <li>Each renewal extends the due date by 14 days</li>
+                                <li>Books with holds cannot be renewed</li>
+                                <li>Overdue books may incur fines upon renewal</li>
+                            </ul>
+                        </div>
+                    </div>
+
+                    <div id="fineSection" class="mt-3" style="display: none;">
+                        <div class="fw-semibold text-danger">Overdue Fine</div>
+                        <div class="fine-amount">$5.00</div>
+                        <div class="note">
+                            This fine must be paid before the book can be renewed.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Action Buttons -->
+                <div class="action-buttons">
+                    <button type="submit" class="btn btn-warning w-50 py-2 fw-semibold">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Renew Book
+                    </button>
+                    <button type="button" class="btn btn-outline-secondary w-50 py-2 fw-semibold" id="resetBtn">
+                        <i class="bi bi-arrow-clockwise me-2"></i>Reset Form
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Recently Renewed Books -->
+        <div class="renewed-books-container">
+            <div class="section-header">
+                <h4><i class="bi bi-arrow-clockwise"></i> Recently Renewed Books</h4>
+            </div>
+            
+            <div class="renewed-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">The Great Gatsby</div>
+                    <div class="book-meta">
+                        <span class="book-author">F. Scott Fitzgerald</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Renewed by: Sarah Johnson (ID: U1024)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> New Due: 2023-11-29
+                        <span class="renewal-count">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="renewed-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">To Kill a Mockingbird</div>
+                    <div class="book-meta">
+                        <span class="book-author">Harper Lee</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Renewed by: Michael Brown (ID: U1037)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> New Due: 2023-11-24
+                        <span class="renewal-count">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="renewed-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">1984</div>
+                    <div class="book-meta">
+                        <span class="book-author">George Orwell</span>
+                        <span class="book-category">Dystopian Fiction</span>
+                    </div>
+                    <div class="user-info-small">Renewed by: Emily Davis (ID: U1015)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> New Due: 2023-12-02
+                        <span class="renewal-count">1</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="renewed-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">Pride and Prejudice</div>
+                    <div class="book-meta">
+                        <span class="book-author">Jane Austen</span>
+                        <span class="book-category">Romance</span>
+                    </div>
+                    <div class="user-info-small">Renewed by: Robert Wilson (ID: U1042)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> New Due: 2023-12-04
+                        <span class="renewal-count">2</span>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="renewed-book-item">
+                <div class="book-cover">
+                    <i class="bi bi-book"></i>
+                </div>
+                <div class="book-details">
+                    <div class="book-title">The Catcher in the Rye</div>
+                    <div class="book-meta">
+                        <span class="book-author">J.D. Salinger</span>
+                        <span class="book-category">Fiction</span>
+                    </div>
+                    <div class="user-info-small">Renewed by: Jennifer Lee (ID: U1031)</div>
+                    <div class="due-date normal">
+                        <i class="bi bi-calendar-check"></i> New Due: 2023-12-06
+                        <span class="renewal-count">1</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- BOOTSTRAP JS -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Set today's date as default renewal date
+            const today = new Date();
+            const formattedDate = today.toISOString().split('T')[0];
+            document.getElementById('renewal-date').value = formattedDate;
+            
+            // Set new due date to 14 days from today
+            const newDueDate = new Date();
+            newDueDate.setDate(today.getDate() + 14);
+            const formattedNewDueDate = newDueDate.toISOString().split('T')[0];
+            document.getElementById('new-due-date').value = formattedNewDueDate;
+            
+            // Search user button functionality
+            document.getElementById('searchUserBtn').addEventListener('click', function() {
+                const userId = document.getElementById('userid').value;
+                if (userId) {
+                    // In a real application, this would fetch user data from the server
+                    // For demo purposes, we'll simulate a response
+                    document.getElementById('username').value = "Michael Brown";
+                    document.getElementById('userStatus').textContent = "Active";
+                    document.getElementById('userStatus').className = "badge bg-success status-badge";
+                    
+                    // Show fine section for demonstration
+                    document.getElementById('fineSection').style.display = 'block';
+                } else {
+                    alert("Please enter a User ID");
+                }
+            });
+            
+            // Search book button functionality
+            document.getElementById('searchBookBtn').addEventListener('click', function() {
+                const bookId = document.getElementById('bookid').value;
+                if (bookId) {
+                    // In a real application, this would fetch book data from the server
+                    // For demo purposes, we'll simulate a response
+                    document.getElementById('book-title').value = "To Kill a Mockingbird";
+                    document.getElementById('book-author').value = "Harper Lee";
+                    document.getElementById('book-isbn').value = "978-0-06-112008-4";
+                    document.getElementById('bookStatus').textContent = "Issued";
+                    document.getElementById('bookStatus').className = "badge bg-warning status-badge";
+                } else {
+                    alert("Please enter a Book ID");
+                }
+            });
+            
+            // Reset form functionality
+            document.getElementById('resetBtn').addEventListener('click', function() {
+                document.getElementById('renewBookForm').reset();
+                
+                // Reset status badges
+                document.getElementById('userStatus').textContent = "Active";
+                document.getElementById('userStatus').className = "badge bg-success status-badge";
+                document.getElementById('bookStatus').textContent = "Issued";
+                document.getElementById('bookStatus').className = "badge bg-warning status-badge";
+                
+                // Hide fine section
+                document.getElementById('fineSection').style.display = 'none';
+                
+                // Reset dates to default
+                document.getElementById('renewal-date').value = formattedDate;
+                document.getElementById('new-due-date').value = formattedNewDueDate;
+            });
+            
+            // Form submission
+            document.getElementById('renewBookForm').addEventListener('submit', function(e) {
+                e.preventDefault();
+                
+                const userId = document.getElementById('userid').value;
+                const bookId = document.getElementById('bookid').value;
+                
+                if (!userId || !bookId) {
+                    alert("Please search for both a user and a book before renewing");
+                    return;
+                }
+                
+                // In a real application, this would submit the data to the server
+                alert("Book renewed successfully!");
+                document.getElementById('renewBookForm').reset();
+                
+                // Reset dates to default
+                document.getElementById('renewal-date').value = formattedDate;
+                document.getElementById('new-due-date').value = formattedNewDueDate;
+                
+                // Hide fine section
+                document.getElementById('fineSection').style.display = 'none';
+            });
+        });
+    </script>
+</body>
+
+</html>
